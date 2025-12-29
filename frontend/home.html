@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="javascript/jquery-1.12.3.js"></script>
+    <script src="javascript/common.js"></script>
+    <script src="javascript/home.js" defer></script>
+</head>
+<body>
+
+<!-- header -->
+<header>
+    <div class="top">
+        <div class="logo">
+            <img src="img/logo.png">
+        </div>
+        <nav class="menu">
+            <ul class="navi">
+                <li><a href="home.html">홈</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+                <li><a href="community.html">일반 게시판</a></li>
+                <li><a href="qna.html">Q&A 게시판</a></li>
+                <li><a href="#" onclick="logout()">로그아웃</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- (공통 Header 삽입) -->
+
+<div class="bodywrap">
+    <div class="imgslide">
+        <ul class="slidelist">
+            <li><img src="img/imgslide1.jpg"></li>
+            <li><img src="img/imgslide2.jpg"></li>
+            <li><img src="img/imgslide3.jpg"></li>
+            <li><img src="img/imgslide4.jpg"></li>
+        </ul>
+    </div>
+
+    <div style="text-align:center; margin-top:40px;">
+        <h2>당신의 커피 이야기를 나누세요</h2><br>
+        <button onclick="location.href='login.html'">로그인</button>
+        <button onclick="location.href='signup.html'">회원가입</button>
+    </div>
+</div>
+
+</body>
+</html>
