@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Q&A 게시판</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="javascript/jquery-1.12.3.js"></script>
+  <script src="javascript/script.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="top">
+    <div class="logo">
+      <a href="#"><img src="img/logo.png" alt="logo"></a>
+    </div>
+    <nav class="menu">
+      <ul class="navi">
+        <li><a href="#">홈</a></li>
+        <li><a href="#">Q&A</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="bodywrap">
+  <div class="qna-container">
+
+    <h2>Q&A 게시판</h2>
+
+    <!-- Q&A 목록 -->
+    <table class="qna-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성일</th>
+          <th>상태</th>
+        </tr>
+      </thead>
+      <tbody id="qnaList">
+        <tr>
+          <td>1</td>
+          <td class="qna-title">도커 배포 오류 질문</td>
+          <td>혜린</td>
+          <td>2025-12-29</td>
+          <td><span class="status wait">대기</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="qna-title">Spring Security 인증 문제</td>
+          <td>관리자</td>
+          <td>2025-12-28</td>
+          <td><span class="status done">완료</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 글쓰기 -->
+    <div class="qna-write">
+      <h3>질문하기</h3>
+      <input type="text" id="title" placeholder="제목">
+      <textarea id="content" placeholder="질문 내용을 입력하세요"></textarea>
+      <button id="writeBtn">등록</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- 상세 모달 -->
+<div id="modal">
+  <div class="modal_up">
+    <div class="uptitle" id="modalTitle"></div>
+    <div class="upbody" id="modalContent"></div>
+    <div class="btn">닫기</div>
+  </div>
+</div>
+
+<footer>
+  <div class="copy">
+    © Q&A Board Project
+  </div>
+</footer>
+
+</body>
+</html>
