@@ -105,11 +105,11 @@ header{
     }
 }
 
-/* ===== 홈 히어로 영역 ===== */
+/* ===== 홈 로그인 영역 ===== */
 .hero{
     position: absolute;
     top: 50%;
-    left: 60%;
+    left: 55%;
     transform: translate(-50%, -50%);
     text-align: center;
     background: rgba(0, 0, 0, 0.45);
@@ -233,6 +233,398 @@ header{
     cursor: pointer;
 }
 
-.qna-write button:hover{
-    background: #000;
+.qna-write button:hover@charset "utf-8";
+
+    *{
+        margin: 0 auto;
+        padding: 0;
+        list-style: none;
+        font-family: "맑은 고딕";
+        color: #333;
+    }
+    body{
+        width: 100%;
+        height: 100vh;
+        min-width: 1000px;
+        min-height: 820px;
+        background-color: #fff;
+        font-size: 20px;
+    }
+    a{
+        text-decoration: none;
+        display: block;
+    }
+    header{
+        float: left;
+        background-color: #AB7743;
+    }
+    .top{
+        float: left;
+        width: 200px;
+        height: calc(100vh - 100px);
+        min-height: 720px;
+    }
+    .logo{
+        float: left;
+        width: 200px;
+        height: 120px;
+        margin-top: 30px;
+    }
+    .logo img{
+        float: left;
+        width: 180px;
+        height: 100px;
+        margin-left: 10px;
+    }
+    .menu{
+        float: left;
+        width: 190px;
+        margin-left: 10px;
+        text-align: center;
+    }
+    .navi>li{
+        float: left;
+        width: 190px;
+        height: 50px;
+    }
+    .navi>li>a{
+        height: 50px;
+        line-height: 50px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+    }
+    .navi>li>a:hover{
+        background-color: #ffe200;
+        color: #000;
+    }
+
+    /* ===== BODY ===== */
+    .bodywrap{
+        float: right;
+        width: calc(100% - 200px);
+        height: calc(100vh - 100px);
+        min-height: 720px;
+    }
+
+    /* ===== 이미지 슬라이드 ===== */
+    .imgslide{
+        float: right;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .slidelist{
+        width: 400%;
+        height: 100%;
+        display: flex;
+        transition: margin-left 0.8s ease-in-out;
+    }
+
+    .slidelist li{
+        width: 25%;
+    }
+
+    .slidelist img{
+        width: 100%;
+        height: calc(100vh - 100px);
+        object-fit: cover;
+    }
+
+    /* 높이 보정 */
+    @media (max-height: 820px){
+        .slidelist img{
+            height: 720px;
+        }
+    }
+
+    /* ===== 홈 로그인 영역 ===== */
+    .hero{
+        position: absolute;
+        top: 50%;
+        left: 55%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        background: rgba(0, 0, 0, 0.45);
+        padding: 50px 60px;
+        border-radius: 20px;
+        backdrop-filter: blur(6px);
+    }
+
+    .hero h1{
+        font-size: 30px;
+        color: #fff;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+    }
+
+    .hero p{
+        font-size: 18px;
+        color: #eee;
+        margin-bottom: 30px;
+    }
+
+    /* 버튼 그룹 */
+    .hero-buttons{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    /* 로그인 버튼 */
+    .btn-login{
+        width: 140px;
+        padding: 12px 0;
+        font-size: 16px;
+        font-weight: bold;
+        background: #ffe200;
+        color: #000;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-login:hover{
+        background: #ffcc00;
+        transform: translateY(-3px);
+    }
+
+    /* 회원가입 버튼 */
+    .btn-signup{
+        width: 140px;
+        padding: 12px 0;
+        font-size: 16px;
+        font-weight: bold;
+        background: transparent;
+        color: #fff;
+        border: 2px solid #fff;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-signup:hover{
+        background: #fff;
+        color: #000;
+        transform: translateY(-3px);
+    }
+
+    /* ===== Q&A / 게시판 공통 ===== */
+    .qna-container{
+        padding: 40px;
+    }
+
+    .qna-table{
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    .qna-table th,
+    .qna-table td{
+        border-bottom: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .qna-table th{
+        background: #f5f5f5;
+    }
+
+    .qna-title{
+        text-align: left;
+        cursor: pointer;
+        color: #171c61;
+    }
+
+    .qna-title:hover{
+        font-weight: bold;
+    }
+
+    /* ===== 글쓰기 ===== */
+    .qna-write{
+        border-top: 2px solid #ccc;
+        padding-top: 20px;
+    }
+
+    .qna-write input,
+    .qna-write textarea{
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .qna-write button{
+        width: 120px;
+        padding: 10px;
+        background: #171c61;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    .qna-write button:hover {
+        background: #000;
+    }
+
+    /* ===== 로그인 페이지 전용 ===== */
+    .login-page {
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(135deg, #AB7743 0%, #c99a6a 50%, #f3e7d9 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* 로그인 박스 */
+    .login-box {
+        width: 360px;
+        padding: 45px 40px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .login-box:hover {
+        transform: translateY(-2px);
+    }
+
+    /* 제목 */
+    .login-box h2 {
+        font-size: 28px;
+        margin-bottom: 30px;
+        color: #AB7743;
+        letter-spacing: 1px;
+    }
+
+    /* 입력창 */
+    .login-box input {
+        width: 80%; /* 100% → 80%로 최종 적용 */
+        height: 50px;
+        margin-bottom: 15px;
+        padding: 0 15px;
+        font-size: 15px;
+        border: 1px solid #ddd;
+        border-radius: 30px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .login-box input:focus {
+        border-color: #AB7743;
+        box-shadow: 0 0 0 2px rgba(171,119,67,0.2);
+    }
+
+    /* 로그인 버튼 */
+    .login-box button {
+        width: 100%;
+        height: 50px;
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        background: #AB7743;
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .login-box button:hover {
+        background: #8f5f34;
+        transform: translateY(-2px);
+    }
+
+    /* ===== 반응형 높이 보정 ===== */
+    @media (max-height: 820px) {
+        .login-box {
+            padding: 30px 25px;
+        }
+    }
+
+/* ===== 회원가입 페이지 전용 ===== */
+.signup-page {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #AB7743 0%, #c99a6a 50%, #f3e7d9 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+/* 회원가입 박스 */
+.signup-box {
+    width: 360px;
+    padding: 45px 40px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.signup-box:hover {
+    transform: translateY(-2px);
+}
+
+/* 제목 */
+.signup-box h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #AB7743;
+    letter-spacing: 1px;
+}
+
+/* 입력창 */
+.signup-box input {
+    width: 80%;
+    height: 50px;
+    margin-bottom: 15px;
+    padding: 0 15px;
+    font-size: 15px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.signup-box input:focus {
+    border-color: #AB7743;
+    box-shadow: 0 0 0 2px rgba(171,119,67,0.2);
+}
+
+/* 회원가입 버튼 */
+.signup-box button {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #AB7743;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.signup-box button:hover {
+    background: #8f5f34;
+    transform: translateY(-2px);
+}
+
+/* ===== 반응형 높이 보정 ===== */
+@media (max-height: 820px) {
+    .signup-box {
+        padding: 30px 25px;
+    }
+}
+
