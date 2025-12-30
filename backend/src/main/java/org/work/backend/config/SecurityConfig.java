@@ -3,6 +3,7 @@ package org.work.backend.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -23,21 +24,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // ⭐ CORS 활성화
-                .cors(cors -> {})
-
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
+                        // ✅ 정적 리소스 & 화면
                         .requestMatchers(
                                 "/",
-                                "/index.html",
-                                "/auth/**",
-                                "/posts/**",
-                                "/api/posts/**",
+                                "/**/*.html",          // ← write.html 포함 (핵심)
                                 "/css/**",
-                                "/js/**"
+                                "/javascript/**",
+                                "/images/**",
+                                "/img/**"
                         ).permitAll()
+
+                        // ✅ 인증 관련 API
+                        .requestMatchers("/api/auth/**").permitAll()
+
+                        // ✅ 게시글 조회만 허용 (GET)
+                        .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+
+                        // ❗ 그 외 (POST, DELETE 등)는 인증 필요
                         .anyRequest().authenticated()
                 )
 
@@ -50,6 +56,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     // ✅ CORS Bean (클래스 레벨)
     @Bean

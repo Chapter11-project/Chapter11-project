@@ -17,12 +17,13 @@ public class UserService {
 
     public void signup(SignupRequest request) {
 
-        String encodedPassword =
-                passwordEncoder.encode(request.password());
+        if (userRepository.existsByUsername(request.username())) {
+            throw new IllegalArgumentException("이미 존재하는 사용자입니다.");
+        }
 
         User user = User.signup(
                 request.username(),
-                encodedPassword
+                passwordEncoder.encode(request.password())
         );
 
         userRepository.save(user);

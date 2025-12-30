@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.work.backend.common.jwt.JwtProvider;
 import org.work.backend.domain.user.dto.LoginRequestDto;
 import org.work.backend.domain.user.dto.LoginResponseDto;
+import org.work.backend.domain.user.dto.SignupRequest;
+import org.work.backend.domain.user.service.UserService;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,7 +21,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public LoginResponseDto login(@RequestBody LoginRequestDto request) {
-
         Authentication authentication =
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
@@ -29,7 +30,6 @@ public class AuthController {
                 );
 
         String token = jwtProvider.generateToken(authentication.getName());
-
         return new LoginResponseDto(token);
     }
 }

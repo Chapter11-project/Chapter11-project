@@ -1,9 +1,10 @@
 package org.work.backend.domain.post.dto;
 
-import lombok.Getter;
+import org.work.backend.domain.post.BoardType;
 
-@Getter
-public class PostRequestDto {
-    private String title;
-    private String content;
+public record PostRequestDto(
+        String title,
+        String content,
+        BoardType boardType
+) {
 }

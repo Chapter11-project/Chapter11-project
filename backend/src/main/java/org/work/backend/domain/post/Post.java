@@ -9,7 +9,8 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
@@ -23,11 +24,21 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;
 
-    public Post(String title, String content, BoardType boardType, User author) {
+    private Post(String title, String content, BoardType boardType, User author) {
         this.title = title;
         this.content = content;
         this.boardType = boardType;
         this.author = author;
+    }
+
+
+    public static Post create(
+            String title,
+            String content,
+            BoardType boardType,
+            User author
+    ) {
+        return new Post(title, content, boardType, author);
     }
 
     public void update(String title, String content) {
