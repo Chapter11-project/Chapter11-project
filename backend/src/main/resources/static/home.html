@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="javascript/jquery-1.12.3.js"></script>
+    <script src="javascript/common.js"></script>
+    <script src="javascript/home.js" defer></script>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header>
+    <div class="top">
+        <div class="logo">
+            <img src="img/logo.png" alt="logo">
+        </div>
+
+        <nav class="menu">
+            <ul class="navi">
+                <li><a href="home.html">홈</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+                <li><a href="community.html">일반 게시판</a></li>
+                <li><a href="qna.html">Q&A 게시판</a></li>
+
+                <!-- 로그아웃 (기본 숨김) -->
+                <li id="logoutLi" style="display:none;">
+                    <a href="#" onclick="logout()">로그아웃</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== Body ===== -->
+<div class="bodywrap">
+
+    <!-- 이미지 슬라이드 -->
+    <div class="imgslide">
+        <ul class="slidelist">
+            <li><img src="img/imgslide1.jpg" alt="coffee 1"></li>
+            <li><img src="img/imgslide2.jpg" alt="coffee 2"></li>
+            <li><img src="img/imgslide3.jpg" alt="coffee 3"></li>
+            <li><img src="img/imgslide4.jpg" alt="coffee 4"></li>
+        </ul>
+    </div>
+
+    <!-- 메인 영역 -->
+    <div class="hero">
+        <h1>당신의 커피 이야기를 나누세요</h1>
+        <p>원두 · 추출 · 취향을 기록하고 공유하는 커피 커뮤니티</p>
+
+        <div class="hero-buttons">
+            <button class="btn-login" id="loginBtn">로그인</button>
+            <button class="btn-signup" id="signupBtn"
+                    onclick="location.href='signup.html'">
+                회원가입
+            </button>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
