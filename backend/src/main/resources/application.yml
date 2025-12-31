@@ -12,6 +12,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
+#  docker compose 의존 false
+  docker:
+    compose:
+      enabled: false
 
   servlet:
     multipart:
