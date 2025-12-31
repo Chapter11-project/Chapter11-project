@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import org.work.backend.domain.post.dto.PostResponseDto;
 import org.work.backend.domain.post.service.PostService;
 import org.work.backend.domain.user.CustomUserDetails;
+import org.work.backend.domain.user.User;
+import org.work.backend.domain.user.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -17,6 +20,7 @@ import java.util.List;
 public class MyPageController {
 
     private final PostService postService;
+    private final UserService userService;
 
 //    내가 작성한 게시글 조회 - 페이징
     @GetMapping("/posts")

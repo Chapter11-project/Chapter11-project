@@ -53,6 +53,20 @@ public class PostService {
                 .toList();
     }
 
+    // 관리자 전체 게시글 조회
+    public Page<PostResponseDto> findAllPosts(Pageable pageable) {
+        return postRepository.findAll(pageable)
+                .map(PostResponseDto::from);
+    }
+
+    // 관리자 전체 글 삭제
+    public void deleteByAdmin(Long postId, User adminUser) {
+        if(adminUser.getRole() != Role.ADMIN) throw new RuntimeException("권한 없음");
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("게시글 없음"));
+        postRepository.delete(post);
+    }
+
 
     /** 삭제 */
     public void delete(Long postId, User currentUser) {
