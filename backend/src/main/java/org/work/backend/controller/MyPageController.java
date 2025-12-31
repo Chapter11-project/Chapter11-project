@@ -1,11 +1,13 @@
 package org.work.backend.controller;
 
-import org.work.backend.domain.post.Post;
-import org.work.backend.domain.post.repository.PostRepository;
-import org.work.backend.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.work.backend.domain.post.dto.PostResponseDto;
+import org.work.backend.domain.post.service.PostService;
+import org.work.backend.domain.user.CustomUserDetails;
 
 import java.util.List;
 
@@ -14,10 +16,29 @@ import java.util.List;
 @RequestMapping("/api/mypage")
 public class MyPageController {
 
-    private final PostRepository postRepository;
+    private final PostService postService;
 
+//    내가 작성한 게시글 조회 - 페이징
     @GetMapping("/posts")
-    public List<Post> myPosts(@AuthenticationPrincipal User user) {
-        return postRepository.findByAuthor(user);
+    public Page<PostResponseDto> myPosts(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            Pageable pageable
+    ) {
+        return postService.myPosts(userDetails.getUser(), pageable);
+    }
+
+//     내가 작성한 게시글 삭제
+    @DeleteMapping("/posts/{postId}")
+    public void deletePost(
+            @PathVariable Long postId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        postService.delete(postId, userDetails.getUser());
+    }
+
+//    내가 작성한 게시글 조회 - 전체
+    @GetMapping("/posts/all")
+    public List<PostResponseDto> myPostsAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        return postService.myPosts(userDetails.getUser());
     }
 }

@@ -66,3 +66,14 @@ CREATE TABLE comments (
         REFERENCES users (id)
         ON DELETE CASCADE
 );
+
+-- users 초기 데이터
+INSERT INTO users (email, nickname, password, role) VALUES
+                                                        ('user@test.com', '유저1', 'encodedPassword', 'USER'),
+                                                        ('admin@test.com', '관리자', 'encodedPassword', 'ADMIN');
+
+-- posts 초기 데이터
+INSERT INTO posts (title, content, author_id) VALUES
+                                                  ('첫 글', '내용1', 1),
+                                                  ('두 번째 글', '내용2', 1),
+                                                  ('관리자 글', '관리자 내용', 2);

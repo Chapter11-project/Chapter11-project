@@ -1,6 +1,8 @@
 package org.work.backend.domain.post.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.work.backend.domain.post.BoardType;
 import org.work.backend.domain.post.Post;
@@ -37,13 +39,20 @@ public class PostService {
                 .toList();
     }
 
-    /** 내가 쓴 글 */
+//    내가 쓴 글 조회 - 페이징
+    public Page<PostResponseDto> myPosts(User user, Pageable pageable) {
+        return postRepository.findByAuthor(user, pageable)
+                .map(PostResponseDto::from); // Page.map 사용
+    }
+
+//    내가 쓴 글 조회 - 전체
     public List<PostResponseDto> myPosts(User user) {
         return postRepository.findByAuthor(user)
                 .stream()
                 .map(PostResponseDto::from)
                 .toList();
     }
+
 
     /** 삭제 */
     public void delete(Long postId, User currentUser) {
