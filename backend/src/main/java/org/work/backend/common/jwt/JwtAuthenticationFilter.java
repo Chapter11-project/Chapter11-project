@@ -14,9 +14,11 @@ import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    //필드
     private final JwtProvider jwtProvider;
     private final CustomUserDetailsService userDetailsService;
 
+    //생성자
     public JwtAuthenticationFilter(
             JwtProvider jwtProvider,
             CustomUserDetailsService userDetailsService
@@ -24,6 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtProvider = jwtProvider;
         this.userDetailsService = userDetailsService;
     }
+
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
