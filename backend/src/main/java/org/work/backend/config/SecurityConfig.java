@@ -22,110 +22,44 @@ import org.work.backend.domain.user.service.CustomUserDetailsService;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
     private final CustomUserDetailsService customUserDetailsService;
 
+    // PasswordEncoder 빈 등록 (UserService 에러 해결)
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http
-                // ===============================
-                // CSRF 비활성화
-                // ===============================
                 .csrf(csrf -> csrf.disable())
-
-                // ===============================
-                // 세션 미사용 (JWT)
-                // ===============================
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-
-                // ===============================
-                // 요청별 접근 권한
-                // ===============================
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-
-                        //정적 리소스 / 화면
-                        .requestMatchers(
-                                "/",
-                                "/login.html",
-                                "/signup.html",
-                                "/home.html",
-                                "/community.html",
-                                "/qna.html",
-                                "/css/**",
-                                "/javascript/**",
-                                "/img/**",
-                                "/favicon.ico"
-                        ).permitAll()
-
-                        //인증 API
-                        .requestMatchers("/auth/**").permitAll()
-
-                        //게시글 조회
-                        .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
-
-                        //나머지는 인증 필요
+                        // 정적 리소스 및 모든 화면 허용
+                        .requestMatchers("/", "/index.html", "/home.html", "/login.html", "/signup.html",
+                                "/community.html", "/qna.html", "/community_detail.html", "/mypage.html",
+                                "/css/**", "/javascript/**", "/img/**", "/favicon.ico").permitAll()
+                        // API 권한
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/community/**", "/api/questions/**").permitAll()
+                        // 마이페이지는 로그인 필수
+                        .requestMatchers("/api/mypage/**").authenticated()
                         .anyRequest().authenticated()
                 )
-
-                // ===============================
-                // JWT 인증 필터 등록
-                // ===============================
-                .addFilterBefore(
-                        new JwtAuthenticationFilter(jwtProvider, customUserDetailsService),
-                        UsernamePasswordAuthenticationFilter.class
-                )
-
-                // ===============================
-                // 기본 로그인 / Basic 인증 비활성화
-                // ===============================
-                .formLogin(form -> form.disable())
-                .httpBasic(basic -> basic.disable());
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
+                .formLogin(f -> f.disable())
+                .httpBasic(b -> b.disable());
 
         return http.build();
     }
 
-    // ===============================
-    // CORS 설정
-    // ===============================
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:3000");
-        config.addAllowedOrigin("http://localhost:5500");
-        config.addAllowedOrigin("http://localhost:8080");
-        config.addAllowedMethod("*");
-        config.addAllowedHeader("*");
-        config.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-
-        return source;
-    }
-
-    // ===============================
-    // AuthenticationManager
-    // ===============================
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration authenticationConfiguration
-    ) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    // ===============================
-    // PasswordEncoder
-    // ===============================
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
