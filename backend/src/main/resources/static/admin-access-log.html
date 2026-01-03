@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 | 접속 로그</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="javascript/jquery-1.12.3.js"></script>
+    <script src="javascript/auth.js"></script>
+    <script src="javascript/admin-access-log.js" defer></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #6f4e37;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<h1>접속 로그 관리</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>사용자</th>
+        <th>IP</th>
+        <th>요청 URI</th>
+        <th>METHOD</th>
+        <th>접속 시간</th>
+    </tr>
+    </thead>
+    <tbody id="logTableBody"></tbody>
+</table>
+
+</body>
+</html>

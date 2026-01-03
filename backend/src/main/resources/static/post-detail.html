@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        h1 { margin-bottom: 10px; }
+        .meta {
+            color: gray;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-bottom: 40px;
+            white-space: pre-wrap;
+        }
+        .comment {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .comment-meta {
+            font-size: 13px;
+            color: gray;
+        }
+        textarea {
+            width: 100%;
+            height: 80px;
+        }
+        button {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 id="title"></h1>
+<div class="meta">
+    작성자: <span id="author"></span> |
+    <span id="createdAt"></span>
+</div>
+
+<div class="content" id="content"></div>
+
+<hr>
+
+<h3>댓글</h3>
+<div id="commentList"></div>
+
+<div id="commentForm">
+    <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
+    <button onclick="createComment()">댓글 작성</button>
+</div>
+
+<script>
+    const postId = new URLSearchParams(location.search).get("id");
+    const token = localStorage.getItem("accessToken");
+
+    // 게시글 상세 조회
+    fetch(`/api/posts/${postId}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("title").innerText = data.title;
+            document.getElementById("author").innerText = data.authorUsername;
+            document.getElementById("createdAt").innerText = data.createdAt;
+            document.getElementById("content").innerText = data.content;
+            renderComments(data.comments);
+        });
+
+    // 댓글 렌더링
+    function renderComments(comments) {
+        const list = document.getElementById("commentList");
+        list.innerHTML = "";
+
+        comments.forEach(c => {
+            const div = document.createElement("div");
+            div.className = "comment";
+
+            div.innerHTML = `
+                <div>${c.content}</div>
+                <div class="comment-meta">
+                    ${c.authorUsername} | ${c.createdAt}
+                    ${token ? `<button onclick="deleteComment(${c.id})">삭제</button>` : ""}
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    }
+
+    <div className="post-card">
+        <div className="post-title-row">
+            <h2 id="postTitle"></h2>
+            <div>
+                <button id="editPostBtn" style="display:none">수정</button>
+                <button id="deletePostBtn" style="display:none">삭제</button>
+            </div>
+        </div>
+
+        <p className="post-meta">
+            작성자: <span id="postAuthor"></span> |
+            작성일: <span id="postCreatedAt"></span>
+        </p>
+
+        <div id="postContent"></div>
+    </div>
+
+    // 댓글 작성
+    function createComment() {
+        if (!token) {
+            alert("로그인이 필요합니다");
+            return;
+        }
+
+        const content = document.getElementById("commentContent").value;
+
+        fetch(`/api/posts/${postId}/comments`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({content})
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("댓글 작성 실패");
+                return res.json();
+            })
+            .then(() => location.reload());
+    }
+
+    // 댓글 삭제
+    function deleteComment(commentId) {
+        fetch(`/api/posts/${postId}/comments/${commentId}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("삭제 실패");
+                location.reload();
+            });
+    }
+</script>
+
+</body>
+</html>

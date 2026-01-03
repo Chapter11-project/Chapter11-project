@@ -1,0 +1,61 @@
+CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    created_at DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6),
+    email VARCHAR(255) NOT NULL,
+    nickname VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('ADMIN', 'USER') NOT NULL
+);
+
+CREATE UNIQUE INDEX UK_users_email ON users (email);
+CREATE UNIQUE INDEX UK_users_nickname ON users (nickname);
+
+
+CREATE TABLE posts (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    author_id BIGINT NOT NULL,
+    type ENUM('QNA', 'COMMUNITY') NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_post_author
+        FOREIGN KEY (author_id)
+        REFERENCES users (id)
+        ON DELETE CASCADE
+);
+
+
+CREATE TABLE comments (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    content TEXT NOT NULL,
+    post_id BIGINT NOT NULL,
+    author_id BIGINT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_comment_post
+        FOREIGN KEY (post_id)
+        REFERENCES posts (id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_comment_author
+        FOREIGN KEY (author_id)
+        REFERENCES users (id)
+        ON DELETE CASCADE
+);
+
+
+CREATE TABLE access_logs (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    ip VARCHAR(45) NOT NULL,
+    action VARCHAR(255) NOT NULL,
+    access_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_accesslog_user
+        FOREIGN KEY (user_id)
+        REFERENCES users (id)
+        ON DELETE CASCADE
+);
+
