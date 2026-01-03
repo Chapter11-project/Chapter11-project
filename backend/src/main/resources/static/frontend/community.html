@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>커피 Q&A | Coffee Community</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- JS -->
+    <script src="javascript/jquery-1.12.3.js"></script>
+    <script src="javascript/common.js"></script>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header>
+    <div class="top">
+        <div class="logo">
+            <img src="img/logo.png" alt="Coffee Community Logo">
+        </div>
+        <nav class="menu">
+            <ul class="navi">
+                <li><a href="home.html">홈</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+                <li><a href="community.html">일반 게시판</a></li>
+                <li><a href="qna.html">Q&A 게시판</a></li>
+                <li><a href="#" onclick="logout()">로그아웃</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== Content ===== -->
+<div class="bodywrap">
+    <div class="qna-container">
+
+        <h2>일반 게시판</h2>
+
+        <!-- Q&A 목록 -->
+        <table class="qna-table">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>상태</th>
+            </tr>
+            </thead>
+            <tbody id="qnaList">
+            <!-- JS로 동적 삽입 -->
+            </tbody>
+        </table>
+
+        <!-- 질문 작성 -->
+        <div class="qna-write">
+            <h3>게시글 등록</h3>
+            <input type="text" id="title" placeholder="질문 제목을 입력하세요">
+            <textarea id="content" placeholder="커피에 대한 질문을 작성하세요"></textarea>
+            <button id="writeBtn">등록</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- 페이지 전용 JS -->
+<script src="javascript/qna.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="javascript/jquery-1.12.3.js"></script>
+    <script src="javascript/common.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="top">
+        <div class="logo"><img src="img/logo.png"></div>
+        <nav class="menu">
+            <ul class="navi">
+                <li><a href="community.html">게시판</a></li>
+                <li><a href="#" onclick="logout()">로그아웃</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="bodywrap qna-container">
+    <h2 id="title"></h2>
+    <p>작성자: <span id="writer"></span></p>
+    <p id="content"></p>
+
+    <div id="postActions"></div>
+
+    <hr>
+
+    <h3>댓글</h3>
+    <div id="commentList"></div>
+
+    <textarea id="commentContent"></textarea>
+    <button onclick="writeComment()">댓글 작성</button>
+</div>
+
+<script src="javascript/community_detail.js"></script>
+</body>
+</html>

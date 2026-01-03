@@ -25,10 +25,4 @@ public class CommentService {
 
         throw new RuntimeException("삭제 권한 없음");
     }
-
-    // 관리자 삭제 메서드 추가
-    public void deleteAllByPostId(Long postId) {
-        commentRepository.deleteByPostId(postId);
-    }
-
 }
