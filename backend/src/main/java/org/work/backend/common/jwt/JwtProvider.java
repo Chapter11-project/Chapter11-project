@@ -15,7 +15,9 @@ public class JwtProvider {
 
     private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1시간
 
-    /** JWT 생성 */
+    /**
+     * JWT 생성
+     */
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -25,7 +27,9 @@ public class JwtProvider {
                 .compact();
     }
 
-    /** JWT에서 username 추출 */
+    /**
+     * JWT에서 username 추출
+     */
     public String getUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -35,7 +39,9 @@ public class JwtProvider {
                 .getSubject();
     }
 
-    /** JWT 검증 */
+    /**
+     * JWT 검증
+     */
     public boolean validateToken(String token) {
         try {
             getUsername(token);

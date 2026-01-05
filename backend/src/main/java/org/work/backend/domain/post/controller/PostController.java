@@ -21,7 +21,9 @@ public class PostController {
     private final PostService postService;
 
 
-    /** 글 작성 */
+    /**
+     * 글 작성
+     */
     @PostMapping
     public void create(
             @RequestBody PostRequestDto request,
@@ -30,7 +32,9 @@ public class PostController {
         postService.create(request, userDetails.getUser());
     }
 
-    /** 게시판별 조회 */
+    /**
+     * 게시판별 조회
+     */
     @GetMapping
     public List<PostResponseDto> list(@RequestParam BoardType boardType) {
         return postService.findByBoardType(boardType);

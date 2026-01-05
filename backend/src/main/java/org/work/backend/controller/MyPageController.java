@@ -22,7 +22,7 @@ public class MyPageController {
     private final PostService postService;
     private final UserService userService;
 
-//    내가 작성한 게시글 조회 - 페이징
+    //    내가 작성한 게시글 조회 - 페이징
     @GetMapping("/posts")
     public Page<PostResponseDto> myPosts(
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -31,7 +31,7 @@ public class MyPageController {
         return postService.myPosts(userDetails.getUser(), pageable);
     }
 
-//     내가 작성한 게시글 삭제
+    //     내가 작성한 게시글 삭제
     @DeleteMapping("/posts/{postId}")
     public void deletePost(
             @PathVariable Long postId,
@@ -40,7 +40,7 @@ public class MyPageController {
         postService.delete(postId, userDetails.getUser());
     }
 
-//    내가 작성한 게시글 조회 - 전체
+    //    내가 작성한 게시글 조회 - 전체
     @GetMapping("/posts/all")
     public List<PostResponseDto> myPostsAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return postService.myPosts(userDetails.getUser());

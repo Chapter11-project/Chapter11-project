@@ -19,7 +19,9 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    /** 글 작성 */
+    /**
+     * 글 작성
+     */
     public void create(PostRequestDto request, User user) {
         Post post = Post.create(
                 request.title(),
@@ -30,7 +32,9 @@ public class PostService {
         postRepository.save(post);
     }
 
-    /** 게시판별 조회 */
+    /**
+     * 게시판별 조회
+     */
     public List<PostResponseDto> findByBoardType(BoardType boardType) {
         return postRepository.findByBoardType(boardType)
                 .stream()
@@ -38,13 +42,17 @@ public class PostService {
                 .toList();
     }
 
-    /** 내가 쓴 글 조회 - 페이징 */
+    /**
+     * 내가 쓴 글 조회 - 페이징
+     */
     public Page<PostResponseDto> myPosts(User user, Pageable pageable) {
         return postRepository.findByAuthor(user, pageable)
                 .map(PostResponseDto::from);
     }
 
-    /** 내가 쓴 글 조회 - 전체 */
+    /**
+     * 내가 쓴 글 조회 - 전체
+     */
     public List<PostResponseDto> myPosts(User user) {
         return postRepository.findByAuthor(user)
                 .stream()
@@ -52,20 +60,26 @@ public class PostService {
                 .toList();
     }
 
-    /** 관리자 전체 게시글 조회 */
+    /**
+     * 관리자 전체 게시글 조회
+     */
     public Page<PostResponseDto> findAllPosts(Pageable pageable) {
         return postRepository.findAll(pageable)
                 .map(PostResponseDto::from);
     }
 
-    /** 관리자 삭제 (권한 체크  → Security에서 이미 보장됨) */
+    /**
+     * 관리자 삭제 (권한 체크  → Security에서 이미 보장됨)
+     */
     public void deleteByAdmin(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("게시글 없음"));
         postRepository.delete(post);
     }
 
-    /** 일반 유저 삭제 */
+    /**
+     * 일반 유저 삭제
+     */
     public void delete(Long postId, User currentUser) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("게시글 없음"));

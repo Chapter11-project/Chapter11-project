@@ -27,13 +27,13 @@ public class AdminController {
         return accessLogService.findAllLogs(pageable);
     }
 
-//    전체 유저 게시글 조회
+    //    전체 유저 게시글 조회
     @GetMapping("/mypage/posts")
     public Page<PostResponseDto> getAllPosts(Pageable pageable) {
         return postService.findAllPosts(pageable);
     }
 
-//    전체 유저 게시글 삭제
+    //    전체 유저 게시글 삭제
     @DeleteMapping("/mypage/posts/{postId}")
     public void deletePost(@PathVariable Long postId) {
         postService.deleteByAdmin(postId);
