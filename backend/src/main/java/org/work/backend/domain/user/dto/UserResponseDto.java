@@ -1,4 +1,4 @@
-package org.work.backend.domain.user.dto;
+package java.org.work.backend.domain.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

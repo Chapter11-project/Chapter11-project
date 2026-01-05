@@ -1,4 +1,4 @@
-package org.work.backend.common.jwt;
+package jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -8,15 +8,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.work.backend.domain.user.service.CustomUserDetailsService;
+import java.org.work.backend.domain.user.service.CustomUserDetailsService;
 
 import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final JwtProvider jwtProvider;
+    private final jwt.JwtProvider jwtProvider;
     private final CustomUserDetailsService userDetailsService;
 
-    public JwtAuthenticationFilter(JwtProvider jwtProvider, CustomUserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(jwt.JwtProvider jwtProvider, CustomUserDetailsService userDetailsService) {
         this.jwtProvider = jwtProvider;
         this.userDetailsService = userDetailsService;
     }

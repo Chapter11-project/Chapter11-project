@@ -1,8 +1,8 @@
-package org.work.backend.domain.post.dto;
+package java.org.work.backend.domain.post.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.work.backend.domain.post.Post;
+import java.org.work.backend.domain.post.Post;
 
 @Getter
 @AllArgsConstructor

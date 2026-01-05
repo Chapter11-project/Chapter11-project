@@ -1,13 +1,13 @@
-package org.work.backend.domain.user.service;
+package java.org.work.backend.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.work.backend.domain.user.CustomUserDetails;
-import org.work.backend.domain.user.User;
-import org.work.backend.domain.user.repository.UserRepository;
+import java.org.work.backend.domain.user.CustomUserDetails;
+import java.org.work.backend.domain.user.User;
+import java.org.work.backend.domain.user.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor

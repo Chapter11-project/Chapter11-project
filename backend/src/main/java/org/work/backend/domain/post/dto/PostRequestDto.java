@@ -1,6 +1,6 @@
-package org.work.backend.domain.post.dto;
+package java.org.work.backend.domain.post.dto;
 
-import org.work.backend.domain.post.BoardType;
+import java.org.work.backend.domain.post.BoardType;
 
 public record PostRequestDto(
         String title,

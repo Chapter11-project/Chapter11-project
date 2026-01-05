@@ -1,4 +1,4 @@
-package org.work.backend.domain.user;
+package java.org.work.backend.domain.user;
 
 public enum Role {
     USER, ADMIN

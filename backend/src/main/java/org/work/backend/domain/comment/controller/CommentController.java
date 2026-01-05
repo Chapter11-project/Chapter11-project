@@ -1,20 +1,42 @@
-package org.work.backend.domain.comment.controller;
+package java.org.work.backend.domain.comment.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import java.org.work.backend.domain.comment.dto.CommentRequestDto;
+import java.org.work.backend.domain.comment.dto.CommentResponseDto;
+import java.org.work.backend.domain.comment.service.CommentService;
+import java.org.work.backend.domain.user.CustomUserDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/comments")
 public class CommentController {
 
-    @PostMapping("/{postId}")
-    public String create() {
-        return "댓글 생성";
-    }
+        private final CommentService commentService;
 
-    @DeleteMapping("/{commentId}")
-    public String delete() {
-        return "댓글 삭제";
-    }
-}
+        @PostMapping("/post/{postId}")
+        public CommentResponseDto create(
+                @PathVariable Long postId,
+                @RequestBody CommentRequestDto request,
+                @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+            return commentService.create(postId, request, userDetails.getUser());
+        }
+
+        @GetMapping("/post/{postId}")
+        public List<CommentResponseDto> comments(@PathVariable Long postId) {
+            return commentService.findByPost(postId);
+        }
+
+        @DeleteMapping("/{commentId}")
+
+            public void delete(
+                    @PathVariable Long commentId,
+                    @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+                commentService.delete(commentId, userDetails.getUser());
+            }
+        }

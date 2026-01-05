@@ -1,4 +1,4 @@
-package org.work.backend.domain.accesslog;
+package java.org.work.backend.domain.accesslog;
 
 import jakarta.persistence.*;
 import lombok.Getter;

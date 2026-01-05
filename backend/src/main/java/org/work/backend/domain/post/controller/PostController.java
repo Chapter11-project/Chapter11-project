@@ -1,15 +1,16 @@
-package org.work.backend.domain.post.controller;
+package java.org.work.backend.domain.post.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.work.backend.domain.post.BoardType;
-import org.work.backend.domain.post.dto.PostRequestDto;
-import org.work.backend.domain.post.dto.PostResponseDto;
-import org.work.backend.domain.post.service.PostService;
-import org.work.backend.domain.user.CustomUserDetails;
+import java.org.work.backend.domain.post.BoardType;
+import java.org.work.backend.domain.post.dto.PostRequestDto;
+import java.org.work.backend.domain.post.dto.PostResponseDto;
+import java.org.work.backend.domain.post.dto.PostUpdateRequestDto;
+import java.org.work.backend.domain.post.service.PostService;
+import java.org.work.backend.domain.user.CustomUserDetails;
 
 import java.util.List;
 
@@ -38,5 +39,35 @@ public class PostController {
     @GetMapping
     public List<PostResponseDto> list(@RequestParam BoardType boardType) {
         return postService.findByBoardType(boardType);
+    }
+    /**
+     * 게시글 상세 조회
+     */
+    @GetMapping("/{postId}")
+    public PostResponseDto detail(@PathVariable Long postId) {
+        return postService.findById(postId);
+    }
+
+    /**
+     * 게시글 수정 - 작성자
+     */
+    @PutMapping("/{postId}")
+    public void update(
+            @PathVariable Long postId,
+            @RequestBody PostUpdateRequestDto request,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        postService.update(postId, request, userDetails.getUser());
+    }
+
+    /**
+     * 게시글 삭제 - 작성자/관리자
+     */
+    @DeleteMapping("/{postId}")
+    public void delete(
+            @PathVariable Long postId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        postService.delete(postId, userDetails.getUser());
     }
 }

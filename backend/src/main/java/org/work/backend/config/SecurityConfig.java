@@ -1,4 +1,4 @@
-package org.work.backend.config;
+package java.org.work.backend.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,12 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.work.backend.common.jwt.JwtAuthenticationFilter;
-import org.work.backend.common.jwt.JwtProvider;
-import org.work.backend.domain.user.service.CustomUserDetailsService;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import jwt.JwtAuthenticationFilter;
+import jwt.JwtAuthenticationEntryPoint;
+import jwt.JwtProvider;
+import java.org.work.backend.domain.user.service.CustomUserDetailsService;
 
 @Configuration
 @RequiredArgsConstructor
@@ -27,6 +26,8 @@ public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
     private final CustomUserDetailsService customUserDetailsService;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final AccessDeniedHandler accessDeniedHandler;
 
     // PasswordEncoder 빈 등록 (UserService 에러 해결)
     @Bean
@@ -42,24 +43,28 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // 정적 리소스 및 모든 화면 허용
                         .requestMatchers("/", "/index.html", "/home.html", "/login.html", "/signup.html",
-                                "/community.html", "/qna.html", "/community_detail.html", "/mypage.html",
+                                "/community.html", "/qna.html", "/community_details.html", "/mypage.html",
                                 "/css/**", "/javascript/**", "/img/**", "/favicon.ico").permitAll()
                         // API 권한
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/community/**", "/api/questions/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/community/**", "/api/questions/**","/api/posts/**",
+                                "/api/comments/post/**").permitAll()
                         // 마이페이지는 로그인 필수
                         .requestMatchers("/api/mypage/**").authenticated()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
-                .formLogin(f -> f.disable())
-                .httpBasic(b -> b.disable());
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler)
+                )
+
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, customUserDetailsService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
 }

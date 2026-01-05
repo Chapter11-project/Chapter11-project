@@ -1,4 +1,4 @@
-package org.work.backend.exception;
+package java.org.work.backend.exception;
 
 public class PostNotFoundException extends RuntimeException {
     public PostNotFoundException(String message) {

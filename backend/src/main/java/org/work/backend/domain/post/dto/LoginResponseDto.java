@@ -1,4 +1,4 @@
-package org.work.backend.domain.post.dto;
+package java.org.work.backend.domain.post.dto;
 
 public record LoginResponseDto(
         String message,

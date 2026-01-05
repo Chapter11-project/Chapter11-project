@@ -1,13 +1,13 @@
-package org.work.backend.domain.user.controller;
+package java.org.work.backend.domain.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.work.backend.domain.user.dto.SignupRequest;
-import org.work.backend.domain.user.service.UserService;
+import java.org.work.backend.domain.user.dto.SignupRequest;
+import java.org.work.backend.domain.user.service.UserService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class SignupController {
 

@@ -1,11 +1,11 @@
-package org.work.backend.domain.user.service;
+package java.org.work.backend.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.work.backend.domain.user.User;
-import org.work.backend.domain.user.dto.SignupRequest;
-import org.work.backend.domain.user.repository.UserRepository;
+import java.org.work.backend.domain.user.User;
+import java.org.work.backend.domain.user.dto.SignupRequest;
+import java.org.work.backend.domain.user.repository.UserRepository;
 
 
 @Service

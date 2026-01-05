@@ -1,11 +1,11 @@
-package org.work.backend.domain.user.repository;
+package java.org.work.backend.domain.user.repository;
 
-import org.work.backend.domain.user.User;
+import java.org.work.backend.domain.user.User;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.work.backend.domain.user.User;
+import java.org.work.backend.domain.user.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
