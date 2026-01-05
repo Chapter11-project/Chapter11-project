@@ -20,7 +20,12 @@ function deletePost() {
     $.ajax({
         type: "DELETE",
         url: `/api/community/${postId}`,
-        success: () => location.href = "community.html"
+        success: () => location.href = "community.html",
+        error: function (err) {
+            if (err.status === 403) {
+                alert("게시글을 삭제할 권한이 없습니다.");
+            }
+        }
     });
 }
 
@@ -76,7 +81,12 @@ function deleteComment(id) {
     $.ajax({
         type: "DELETE",
         url: `/api/comments/${id}`,
-        success: loadComments
+        success: loadComments,
+        error: function (err) {
+            if (err.status === 403) {
+                alert("댓글을 삭제할 권한이 없습니다.");
+            }
+        }
     });
 }
 

@@ -9,6 +9,7 @@ import org.work.backend.domain.comment.repository.CommentRepository;
 import org.work.backend.domain.post.repository.PostRepository;
 import org.work.backend.domain.user.CustomUserDetails;
 import org.work.backend.domain.user.Role;
+import org.work.backend.exception.AccessDeniedException;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class AdminService {
     // 🔐 관리자 검증
     public void validateAdmin(CustomUserDetails userDetails) {
         if (userDetails == null || userDetails.getUser().getRole() != Role.ADMIN) {
-            throw new RuntimeException("관리자 권한 필요");
+            throw new AccessDeniedException("관리자 권한 필요");
         }
     }
 

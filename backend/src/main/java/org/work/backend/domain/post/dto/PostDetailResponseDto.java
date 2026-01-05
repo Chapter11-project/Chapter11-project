@@ -10,7 +10,8 @@ public record PostDetailResponseDto(
         Long id,
         String title,
         String content,
-        String authorUsername,
+        String writer,
+        Long userId,
         LocalDateTime createdAt,
         List<CommentResponseDto> comments
 ) {
@@ -20,6 +21,7 @@ public record PostDetailResponseDto(
                 post.getTitle(),
                 post.getContent(),
                 post.getUser().getUsername(),
+                post.getUser().getId(),
                 post.getCreatedAt(),
                 post.getComments()
                         .stream()
