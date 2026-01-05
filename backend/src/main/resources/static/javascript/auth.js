@@ -1,22 +1,32 @@
 function login() {
-    const username = $("#email").val();
-    const password = $("#password").val();
-
     $.ajax({
-        url: "http://localhost:8080/auth/login",
         type: "POST",
+        url: "/api/auth/login",
         contentType: "application/json",
         data: JSON.stringify({
-            username,
-            password
+            email: $("#email").val(),
+            password: $("#password").val()
         }),
         success: function (res) {
-            localStorage.setItem("token", res.token);
-            alert("로그인 성공");
-            location.href = "home.html";
-        },
-        error: function () {
-            alert("로그인 실패");
+            localStorage.setItem("token", res.accessToken);
+            localStorage.setItem("role", res.role);
+            location.href = "community.html";
+        }
+    });
+}
+
+function signup() {
+    $.ajax({
+        type: "POST",
+        url: "/api/auth/signup",
+        contentType: "application/json",
+        data: JSON.stringify({
+            email: $("#email").val(),
+            password: $("#password").val()
+        }),
+        success: function () {
+            alert("회원가입 완료");
+            location.href = "login.html";
         }
     });
 }
