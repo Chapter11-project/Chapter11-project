@@ -1,6 +1,5 @@
 package org.work.backend.domain.comment.dto;
 
-import lombok.Getter;
 import org.work.backend.domain.comment.Comment;
 
 import java.time.LocalDateTime;
@@ -8,8 +7,8 @@ import java.time.LocalDateTime;
 public record CommentResponseDto(
         Long id,
         String content,
-        Long authorId,
-        String authorUsername,
+        Long userId,
+        String writer,
         LocalDateTime createdAt
 ) {
     public static CommentResponseDto from(Comment comment) {

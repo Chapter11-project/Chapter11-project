@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.work.backend.mypage.dto.MyPageResponse;
+import org.work.backend.exception.UnauthorizedException;
 
+import org.work.backend.domain.comment.Comment;
+import org.work.backend.domain.post.Post;
 import java.util.List;
 
 @RestController
@@ -27,19 +30,20 @@ public class MyPageController {
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         if (userDetails == null) {
-            throw new RuntimeException("로그인 필요");
+            throw new UnauthorizedException("로그인이 필요합니다.");
         }
 
         User user = userDetails.getUser();
 
+        boolean isAdmin = user.getRole() == Role.ADMIN;
+
+        List<Post> posts = isAdmin ? postRepository.findAll() : postRepository.findByAuthor(user);
+        List<Comment> comments = isAdmin ? commentRepository.findAll() : commentRepository.findByAuthor(user);
+
         return MyPageResponse.builder()
-                .posts(postRepository.findByAuthor(user))
-                .comments(commentRepository.findByAuthor(user))
-                .accessLogs(
-                        user.getRole() == Role.ADMIN
-                                ? accessLogRepository.findAll()
-                                : List.of()
-                )
+                .posts(posts)
+                .comments(comments)
+                .accessLogs(isAdmin ? accessLogRepository.findAll() : List.of())
                 .build();
     }
 }

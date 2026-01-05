@@ -32,4 +32,13 @@ public class User {
     public static User signup(String username, String encodedPassword) {
         return new User(username, encodedPassword, Role.USER);
     }
+
+    /** 관리자 생성 팩토리 메서드 */
+    public static User admin(String username, String encodedPassword) {
+        return new User(username, encodedPassword, Role.ADMIN);
+    }
+
+    public void promoteToAdmin() {
+        this.role = Role.ADMIN;
+    }
 }
