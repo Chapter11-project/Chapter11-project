@@ -10,7 +10,7 @@ public record AccessLogResponseDto(
         String ipAddress,
         String requestUri,
         String httpMethod,
-        LocalDateTime accessedAt
+    LocalDateTime accessedAt
 ) {
     public static AccessLogResponseDto from(AccessLog log) {
         return new AccessLogResponseDto(

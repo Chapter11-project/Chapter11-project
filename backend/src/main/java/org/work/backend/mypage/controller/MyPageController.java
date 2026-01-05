@@ -33,8 +33,8 @@ public class MyPageController {
         User user = userDetails.getUser();
 
         return MyPageResponse.builder()
-                .posts(postRepository.findByUser(user))   // ✅ 여기 수정
-                .comments(commentRepository.findByUser(user))
+                .posts(postRepository.findByAuthor(user))
+                .comments(commentRepository.findByAuthor(user))
                 .accessLogs(
                         user.getRole() == Role.ADMIN
                                 ? accessLogRepository.findAll()
