@@ -15,10 +15,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
-#  docker compose 의존 false
-#  docker:
-#    compose:
-#      enabled: false
+  #  Docker Compose 파일 위치를 명시적으로 지정하여
+  #  프로젝트 루트에서 실행할 때 파일을 찾지 못하는 문제를 방지
+  docker:
+    compose:
+      file: backend/compose.yaml
+      #  docker compose 의존 false
+      enabled: false
+
 
   servlet:
     multipart:
