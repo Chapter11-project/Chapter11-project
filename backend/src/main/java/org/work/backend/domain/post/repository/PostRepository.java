@@ -18,5 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByAuthor(User author);
 
     // 게시판별 조회
-    List<Post> findByBoardType(BoardType boardType);
+    List<Post> findByBoardTypeOrderByCreatedAtDesc(BoardType boardType);
+
+    List<Post> findByAuthorOrderByCreatedAtDesc(User author);
 }

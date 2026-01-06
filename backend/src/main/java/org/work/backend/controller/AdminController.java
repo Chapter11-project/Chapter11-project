@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.work.backend.domain.accesslog.dto.AccessLogResponseDto;
 import org.work.backend.domain.accesslog.service.AccessLogService;
 import org.work.backend.domain.comment.service.CommentService;
@@ -29,7 +31,9 @@ public class AdminController {
 
     //    전체 유저 게시글 조회
     @GetMapping("/mypage/posts")
-    public Page<PostResponseDto> getAllPosts(Pageable pageable) {
+    public Page<PostResponseDto> getAllPosts(
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
         return postService.findAllPosts(pageable);
     }
 

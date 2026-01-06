@@ -44,21 +44,35 @@
 
 <!-- ===== Content ===== -->
 <div class="bodywrap">
-    <div class="qna-container">
+    <div class="board-container">
 
-        <h2>마이페이지</h2>
-
-        <!-- 내 정보 요약 -->
-        <div class="mypage-summary">
-            <p><strong>내 활동 내역</strong></p>
+        <div class="board-header">
+            <div>
+                <p class="eyebrow">내 활동을 한눈에 확인하세요.</p>
+                <h2>마이페이지</h2>
+            </div>
+            <div class="board-actions">
+                <span id="roleBadge" class="badge secondary"></span>
+            </div>
         </div>
 
         <!-- 내가 쓴 글 목록 -->
-        <table class="qna-table">
+        <table class="board-table">
             <thead>
             <tr>
                 <th>구분</th>
                 <th>제목</th>
+                <th id="authorHeader" class="optional">작성자</th>
                 <th>작성일</th>
             </tr>
             </thead>
+            <tbody id="myPostList"></tbody>
+        </table>
+        <div id="myPostEmpty" class="board-empty hidden">작성한 글이 없습니다.</div>
+
+    </div>
+</div>
+
+<script src="javascript/mypage.js"></script>
+</body>
+</html>

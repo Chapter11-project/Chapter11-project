@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.work.backend.domain.post.dto.PostResponseDto;
 import org.work.backend.domain.post.service.PostService;
 import org.work.backend.domain.user.CustomUserDetails;
@@ -26,7 +28,7 @@ public class MyPageController {
     @GetMapping("/posts")
     public Page<PostResponseDto> myPosts(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            Pageable pageable
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         return postService.myPosts(userDetails.getUser(), pageable);
     }

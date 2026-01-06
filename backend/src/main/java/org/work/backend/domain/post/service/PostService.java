@@ -28,10 +28,11 @@ public class PostService {
      */
     @Transactional
     public void create(PostRequestDto request, User user) {
+        BoardType boardType = request.boardType() != null ? request.boardType() : BoardType.GENERAL;
         Post post = Post.create(
                 request.title(),
                 request.content(),
-                request.boardType(),
+                boardType,
                 user
         );
         postRepository.save(post);
@@ -90,7 +91,8 @@ public class PostService {
             throw new AccessDeniedException("수정 권한 없음");
         }
 
-        post.update(request.title(), request.content());
+        BoardType boardType = request.boardType() != null ? request.boardType() : post.getBoardType();
+        post.update(request.title(), request.content(), boardType);
     }
 
     /**
@@ -120,11 +122,11 @@ public class PostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("게시글 없음"));
 
-            if (currentUser.getRole() != Role.ADMIN &&
-                    !post.getAuthor().getId().equals(currentUser.getId())) {
-                throw new AccessDeniedException("삭제 권한 없음");
-            }
-
-            postRepository.delete(post);
+        if (currentUser.getRole() != Role.ADMIN &&
+                !post.getAuthor().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("삭제 권한 없음");
         }
+
+        postRepository.delete(post);
     }
+}

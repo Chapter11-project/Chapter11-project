@@ -31,7 +31,6 @@ public class Post {
         this.author = author;
     }
 
-
     public static Post create(
             String title,
             String content,
@@ -41,8 +40,9 @@ public class Post {
         return new Post(title, content, boardType, author);
     }
 
-    public void update(String title, String content) {
+    public void update(String title, String content, BoardType boardType) {
         this.title = title;
         this.content = content;
+        this.boardType = boardType;
     }
 }

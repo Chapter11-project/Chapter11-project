@@ -35,7 +35,7 @@ public class QnaService {
 
     @Transactional(readOnly = true)
     public List<QuestionResponseDto> list() {
-        return questionRepository.findAll()
+        return questionRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
                 .map(QuestionResponseDto::from)
                 .toList();
@@ -58,7 +58,7 @@ public class QnaService {
                 question.getAuthor(),
                 author,
                 "내 질문에 새로운 답변이 등록되었습니다.",
-                "/qna.html"
+                "/qna.html?questionId=" + questionId
         );
         return AnswerResponseDto.from(saved);
     }
@@ -81,11 +81,13 @@ public class QnaService {
 
         answer.accept();
         question.updateStatus(QuestionStatus.SOLVED);
+        answerRepository.save(answer);
+        questionRepository.save(question);
         notificationService.notify(
                 answer.getAuthor(),
                 currentUser,
                 "내 답변이 채택되었습니다!",
-                "/qna.html"
+                "/qna.html?questionId=" + questionId
         );
     }
 }

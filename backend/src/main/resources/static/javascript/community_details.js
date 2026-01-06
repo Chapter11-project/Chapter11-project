@@ -2,6 +2,18 @@ $(function () {
     const params = new URLSearchParams(window.location.search);
     const postId = params.get("id");
 
+    function formatDate(dateString) {
+        if (!dateString) return "-";
+        const d = new Date(dateString);
+        return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+    }
+
+    function boardLabel(type) {
+        if (type === "GENERAL") return "커뮤니티";
+        if (type === "QNA") return "Q&A";
+        return type || "-";
+    }
+
     if (!postId) {
         alert("잘못된 접근입니다.");
         location.href = "community.html";
@@ -11,6 +23,8 @@ $(function () {
     function renderPost(post) {
         $("#title").text(post.title);
         $("#writer").text(post.authorUsername);
+        $("#createdAt").text(formatDate(post.createdAt));
+        $("#postType").text(boardLabel(post.boardType));
         $("#content").text(post.content);
 
         const owner = currentUsername() && currentUsername() === post.authorUsername;
@@ -36,6 +50,7 @@ $(function () {
 
     function loadComments() {
         $.get(`/api/comments/post/${postId}`, list => {
+            $("#commentCount").text(`총 ${list.length}개`);
             $("#commentList").empty();
             list.forEach(c => {
                 const canDelete = isAdmin() || currentUsername() === c.authorUsername;
@@ -61,38 +76,9 @@ $(function () {
         if (newTitle === null) return;
         const newContent = prompt("내용을 수정하세요", post.content);
         if (newContent === null) return;
-
-        $.ajax({
-            type: "PUT",
-            url: `/api/posts/${postId}`,
-            contentType: "application/json",
-            data: JSON.stringify({
-                title: newTitle,
-                content: newContent
-            }),
-            success: loadPost
-        });
-    }
-
-    function deletePost() {
-        if (!confirm("게시글을 삭제하시겠습니까?")) return;
-
-        $.ajax({
-            type: "DELETE",
-            url: `/api/posts/${postId}`,
-            success: function () {
-                alert("삭제되었습니다.");
-                location.href = "community.html";
-            }
-        });
-    }
-
-    function deleteComment(commentId) {
-        $.ajax({
-            type: "DELETE",
-            url: `/api/comments/${commentId}`,
-            success: loadComments
-        });
+    $(function () {
+        success: loadComments
+    });
     }
 
     window.writeComment = function () {

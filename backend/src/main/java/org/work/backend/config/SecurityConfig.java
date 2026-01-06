@@ -14,8 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.work.backend.common.jwt.JwtAuthenticationFilter;
 import org.work.backend.common.jwt.JwtAuthenticationEntryPoint;
 import org.work.backend.common.jwt.JwtProvider;
@@ -53,7 +51,7 @@ public class SecurityConfig {
                                 "/api/qna/**",
                                 "/api/comments/post/**").permitAll()
                         // 마이페이지는 로그인 필수
-                        .requestMatchers("/api/mypage/**", "notifications/**").authenticated()
+                        .requestMatchers("/api/mypage/**", "/notifications/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex

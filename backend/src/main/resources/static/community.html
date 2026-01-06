@@ -44,36 +44,48 @@
 
 <!-- ===== Content ===== -->
 <div class="bodywrap">
-    <div class="community-container">
+    <div class="board-container">
 
-        <div class="community-header">
+        <div class="board-header">
             <div>
                 <p class="eyebrow">커피 한 잔처럼 가벼운 수다부터 깊은 이야기까지</p>
                 <h2>일반 게시판</h2>
             </div>
-            <div class="community-actions">
+            <div class="board-actions">
                 <button id="refreshBtn" class="btn-outline">새로고침</button>
             </div>
         </div>
 
-        <!-- 게시글 목록 -->
-        <div id="communityList" class="community-list">
-            <!-- JS로 동적 삽입 -->
-        </div>
+        <table class="board-table">
+            <thead>
+            <tr>
+                <th>구분</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody id="communityList"></tbody>
+        </table>
+        <div id="communityEmpty" class="board-empty hidden">등록된 글이 없습니다.</div>
 
         <!-- 글 작성 -->
-        <div class="community-write">
-            <h3>새 글 쓰기</h3>
-            <input type="text" id="title" placeholder="제목을 입력하세요">
-            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
-            <button id="writeBtn" class="btn-primary">등록</button>
-            <p class="helper-text">로그인 후 작성할 수 있습니다.</p>
+            <div class="board-write">
+                <div class="board-write__header">
+                    <h3>새 글 쓰기</h3>
+                    <span class="helper-text">로그인 후 작성할 수 있습니다.</span>
+                </div>
+                <input type="text" id="title" placeholder="제목을 입력하세요">
+                <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+                <div class="write-actions">
+                    <button id="writeBtn" class="btn-primary">등록</button>
+                </div>
+            </div>
+
         </div>
-
     </div>
-</div>
 
-<script src="javascript/community.js"></script>
+    <script src="javascript/community.js"></script>
 
 </body>
 </html>
