@@ -1,23 +1,25 @@
 package org.work.backend.domain.post.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.work.backend.domain.post.Post;
 
-@Getter
-@AllArgsConstructor
-public class PostResponseDto {
-    private Long id;
-    private String title;
-    private String content;
-    private String authorUsername;
+import java.time.LocalDateTime;
 
+public record PostResponseDto(
+        Long id,
+        String title,
+        String content,
+        String writer,
+        Long userId,
+        LocalDateTime createdAt
+) {
     public static PostResponseDto from(Post post) {
         return new PostResponseDto(
                 post.getId(),
                 post.getTitle(),
                 post.getContent(),
-                post.getAuthor().getUsername()
+                post.getUser().getUsername(),
+                post.getUser().getId(),
+                post.getCreatedAt()
         );
     }
 }

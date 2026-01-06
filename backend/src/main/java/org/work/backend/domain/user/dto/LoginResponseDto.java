@@ -1,5 +1,7 @@
 package org.work.backend.domain.user.dto;
 
 public record LoginResponseDto(
-        String token
+        String accessToken,
+        String role,
+        Long userId
 ) {}

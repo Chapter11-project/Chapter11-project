@@ -1,8 +1,19 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:3.2.0"
+        classpath "io.spring.gradle:dependency-management-plugin:1.1.7"
+    }
+}
+
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '4.0.1'
-    id 'io.spring.dependency-management' version '1.1.7'
 }
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 group = 'org.work'
 version = '0.0.1-SNAPSHOT'
@@ -51,8 +62,14 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
-    // Test
+    // Spring Boot 테스트용
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Spring Security 테스트용
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    testImplementation 'com.h2database:h2'
+
 }
 
 

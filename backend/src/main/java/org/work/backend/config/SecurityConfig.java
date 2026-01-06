@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -12,9 +13,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.work.backend.common.jwt.JwtAuthenticationFilter;
+import org.work.backend.common.jwt.JwtProvider;
+import org.work.backend.domain.user.service.CustomUserDetailsService;
 
 @Configuration
 @RequiredArgsConstructor
@@ -22,6 +27,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 // ↑ @PreAuthorize, @PostAuthorize 같은 메서드 단위 권한 체크를 활성화
 //   → 컨트롤러/서비스 레벨에서 세밀한 권한 제어 가능
 public class SecurityConfig {
+
+    private final JwtProvider jwtProvider;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -62,6 +70,15 @@ public class SecurityConfig {
                        /* 로그인 / 회원가입 / 토큰 재발급
                         → 인증 이전에 접근 가능해야 함*/
 
+                // -------------------------------
+                // 관리자 전용 API
+                // -------------------------------
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                // -------------------------------
+                // 커뮤니티 조회
+                // -------------------------------
+                .requestMatchers(HttpMethod.GET, "/api/community/**").permitAll()
 
                 // -------------------------------
                 // 게시글 조회 (읽기 전용)
@@ -94,10 +111,28 @@ public class SecurityConfig {
                  */
 
                 // ===============================
+                // 인증/인가 예외 처리
+                // ===============================
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) ->
+                                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized"))
+                        .accessDeniedHandler((request, response, accessDeniedException) ->
+                                response.sendError(HttpStatus.FORBIDDEN.value(), "Forbidden"))
+                )
+
+                // ===============================
                 // 세션 관리 정책
                 // ===============================
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+
+                // ===============================
+                // JWT 필터
+                // ===============================
+                .addFilterBefore(
+                        jwtAuthenticationFilter(),
+                        UsernamePasswordAuthenticationFilter.class
                 );
         /*
          * 서버 세션 생성 x
@@ -164,7 +199,15 @@ public class SecurityConfig {
          * - 단방향 해시
          * - Salt 자동 적용
          * - 실무 표준
-         */
+        */
         return new BCryptPasswordEncoder();
+    }
+
+    // ===============================
+    // JwtAuthenticationFilter
+    // ===============================
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtProvider, customUserDetailsService);
     }
 }

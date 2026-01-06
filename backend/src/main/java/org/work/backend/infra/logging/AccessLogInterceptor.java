@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.work.backend.common.util.SecurityUtil;
+import org.work.backend.common.jwt.JwtProvider;
 import org.work.backend.domain.accesslog.service.AccessLogService;
 
 @Component
@@ -13,16 +13,30 @@ import org.work.backend.domain.accesslog.service.AccessLogService;
 public class AccessLogInterceptor implements HandlerInterceptor {
 
     private final AccessLogService accessLogService;
+    private final JwtProvider jwtProvider;
 
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) {
 
+        String username = "ANONYMOUS";
+
+        String header = request.getHeader("Authorization");
+        if (header != null && header.startsWith("Bearer ")) {
+            String token = header.substring(7);
+            if (jwtProvider.validateToken(token)) {
+                username = jwtProvider.getUsername(token);
+            }
+        }
+
         accessLogService.save(
-                SecurityUtil.getCurrentUsername(),
+                null,
+                username,
                 request.getRemoteAddr(),
-                request.getRequestURI()
+                request.getHeader("User-Agent"),
+                request.getRequestURI(),
+                request.getMethod()
         );
         return true;
     }
