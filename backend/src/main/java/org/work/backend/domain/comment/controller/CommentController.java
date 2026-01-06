@@ -1,11 +1,11 @@
-package java.org.work.backend.domain.comment.controller;
+package org.work.backend.domain.comment.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import java.org.work.backend.domain.comment.dto.CommentRequestDto;
-import java.org.work.backend.domain.comment.dto.CommentResponseDto;
-import java.org.work.backend.domain.comment.service.CommentService;
-import java.org.work.backend.domain.user.CustomUserDetails;
+import org.work.backend.domain.comment.dto.CommentRequestDto;
+import org.work.backend.domain.comment.dto.CommentResponseDto;
+import org.work.backend.domain.comment.service.CommentService;
+import org.work.backend.domain.user.CustomUserDetails;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.List;

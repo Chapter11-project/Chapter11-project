@@ -1,4 +1,4 @@
-package java.org.work.backend.domain.user;
+package org.work.backend.domain.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

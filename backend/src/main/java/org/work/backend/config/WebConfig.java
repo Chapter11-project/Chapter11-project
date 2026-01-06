@@ -1,4 +1,4 @@
-package java.org.work.backend.config;
+package org.work.backend.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

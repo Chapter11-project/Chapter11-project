@@ -1,12 +1,12 @@
-package java.org.work.backend.infra.logging;
+package org.work.backend.infra.logging;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import util.SecurityUtil;
-import java.org.work.backend.domain.accesslog.service.AccessLogService;
+import org.work.backend.common.util.SecurityUtil;
+import org.work.backend.domain.accesslog.service.AccessLogService;
 
 @Component
 @RequiredArgsConstructor

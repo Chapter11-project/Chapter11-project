@@ -1,12 +1,12 @@
-package java.org.work.backend.domain.accesslog.service;
+package org.work.backend.domain.accesslog.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.org.work.backend.domain.accesslog.AccessLog;
-import java.org.work.backend.domain.accesslog.dto.AccessLogResponseDto;
-import java.org.work.backend.domain.accesslog.repository.AccessLogRepository;
+import org.work.backend.domain.accesslog.AccessLog;
+import org.work.backend.domain.accesslog.dto.AccessLogResponseDto;
+import org.work.backend.domain.accesslog.repository.AccessLogRepository;
 
 @Service
 @RequiredArgsConstructor

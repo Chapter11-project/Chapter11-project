@@ -1,4 +1,4 @@
-package java.org.work.backend.exception;
+package org.work.backend.exception;
 
 public class AccessDeniedException extends RuntimeException {
     public AccessDeniedException(String message) {

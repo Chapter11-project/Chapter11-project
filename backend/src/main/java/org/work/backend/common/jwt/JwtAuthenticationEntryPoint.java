@@ -1,4 +1,4 @@
-package jwt;
+package org.work.backend.common.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import response.ApiResponse;
+import org.work.backend.common.response.ApiResponse;
 
 import java.io.IOException;
 

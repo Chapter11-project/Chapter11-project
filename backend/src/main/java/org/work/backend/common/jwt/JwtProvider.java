@@ -1,9 +1,9 @@
-package jwt;
+package org.work.backend.common.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
-import java.org.work.backend.domain.user.Role;
+import org.work.backend.domain.user.Role;
 
 import java.security.Key;
 import java.util.Date;

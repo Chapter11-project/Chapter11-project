@@ -1,4 +1,4 @@
-package java.org.work.backend.exception;
+package org.work.backend.exception;
 
 public class UnauthorizedException extends RuntimeException {
     public UnauthorizedException(String message) {

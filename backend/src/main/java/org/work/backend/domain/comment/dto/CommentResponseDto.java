@@ -1,6 +1,6 @@
-package java.org.work.backend.domain.comment.dto;
+package org.work.backend.domain.comment.dto;
 
-import java.org.work.backend.domain.comment.Comment;
+import org.work.backend.domain.comment.Comment;
 
 public record CommentResponseDto(
         Long id,

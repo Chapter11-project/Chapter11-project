@@ -1,8 +1,8 @@
-package java.org.work.backend.domain.comment;
+package org.work.backend.domain.comment;
 
 
-import java.org.work.backend.domain.post.Post;
-import java.org.work.backend.domain.user.User;
+import org.work.backend.domain.post.Post;
+import org.work.backend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

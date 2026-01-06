@@ -1,4 +1,4 @@
-package java.org.work.backend.domain.comment.dto;
+package org.work.backend.domain.comment.dto;
 
 import lombok.Getter;
 

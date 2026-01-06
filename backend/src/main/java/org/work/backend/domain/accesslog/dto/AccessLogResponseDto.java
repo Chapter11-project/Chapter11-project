@@ -1,8 +1,8 @@
-package java.org.work.backend.domain.accesslog.dto;
+package org.work.backend.domain.accesslog.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import java.org.work.backend.domain.accesslog.AccessLog;
+import org.work.backend.domain.accesslog.AccessLog;
 
 import java.time.LocalDateTime;
 

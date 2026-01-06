@@ -1,4 +1,4 @@
-package java.org.work.backend.domain.user.dto;
+package org.work.backend.domain.user.dto;
 
 public record SignupRequest(
         String username,

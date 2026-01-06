@@ -1,15 +1,15 @@
-package java.org.work.backend.controller;
+package org.work.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import java.org.work.backend.domain.post.dto.PostResponseDto;
-import java.org.work.backend.domain.post.service.PostService;
-import java.org.work.backend.domain.user.CustomUserDetails;
-import java.org.work.backend.domain.user.User;
-import java.org.work.backend.domain.user.service.UserService;
+import org.work.backend.domain.post.dto.PostResponseDto;
+import org.work.backend.domain.post.service.PostService;
+import org.work.backend.domain.user.CustomUserDetails;
+import org.work.backend.domain.user.User;
+import org.work.backend.domain.user.service.UserService;
 
 import java.security.Principal;
 import java.util.List;

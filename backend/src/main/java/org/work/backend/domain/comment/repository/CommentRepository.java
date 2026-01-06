@@ -1,6 +1,6 @@
-package java.org.work.backend.domain.comment.repository;
+package org.work.backend.domain.comment.repository;
 
-import java.org.work.backend.domain.comment.Comment;
+import org.work.backend.domain.comment.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

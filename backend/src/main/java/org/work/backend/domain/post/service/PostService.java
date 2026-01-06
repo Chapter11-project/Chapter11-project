@@ -1,19 +1,19 @@
-package java.org.work.backend.domain.post.service;
+package org.work.backend.domain.post.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.org.work.backend.domain.post.BoardType;
-import java.org.work.backend.domain.post.Post;
-import java.org.work.backend.domain.post.dto.PostRequestDto;
-import java.org.work.backend.domain.post.dto.PostResponseDto;
-import java.org.work.backend.domain.post.dto.PostUpdateRequestDto;
-import java.org.work.backend.domain.post.repository.PostRepository;
-import java.org.work.backend.domain.user.Role;
-import java.org.work.backend.domain.user.User;
-import java.org.work.backend.exception.AccessDeniedException;
+import org.work.backend.domain.post.BoardType;
+import org.work.backend.domain.post.Post;
+import org.work.backend.domain.post.dto.PostRequestDto;
+import org.work.backend.domain.post.dto.PostResponseDto;
+import org.work.backend.domain.post.dto.PostUpdateRequestDto;
+import org.work.backend.domain.post.repository.PostRepository;
+import org.work.backend.domain.user.Role;
+import org.work.backend.domain.user.User;
+import org.work.backend.exception.AccessDeniedException;
 
 import java.util.List;
 

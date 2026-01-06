@@ -1,4 +1,4 @@
-package response;
+package org.work.backend.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

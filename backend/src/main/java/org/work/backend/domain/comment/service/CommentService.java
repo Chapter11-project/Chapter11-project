@@ -1,18 +1,17 @@
-package java.org.work.backend.domain.comment.service;
-
+package org.work.backend.domain.comment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.org.work.backend.domain.comment.Comment;
-import java.org.work.backend.domain.comment.dto.CommentRequestDto;
-import java.org.work.backend.domain.comment.dto.CommentResponseDto;
-import java.org.work.backend.domain.comment.repository.CommentRepository;
-import java.org.work.backend.domain.post.Post;
-import java.org.work.backend.domain.post.repository.PostRepository;
-import java.org.work.backend.domain.user.Role;
-import java.org.work.backend.domain.user.User;
-import java.org.work.backend.exception.AccessDeniedException;
+import org.work.backend.domain.comment.Comment;
+import org.work.backend.domain.comment.dto.CommentRequestDto;
+import org.work.backend.domain.comment.dto.CommentResponseDto;
+import org.work.backend.domain.comment.repository.CommentRepository;
+import org.work.backend.domain.notification.service.NotificationService;
+import org.work.backend.domain.post.repository.PostRepository;
+import org.work.backend.domain.user.Role;
+import org.work.backend.domain.user.User;
+import org.work.backend.exception.AccessDeniedException;
 
 import java.util.List;
 
@@ -22,14 +21,21 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final NotificationService notificationService;
 
     @Transactional
     public CommentResponseDto create(Long postId, CommentRequestDto request, User user) {
-        Post post = postRepository.findById(postId)
+        org.work.backend.domain.post.Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("게시글 없음"));
 
         Comment comment = new Comment(request.getContent(), user, post);
         Comment saved = commentRepository.save(comment);
+        notificationService.notify(
+                post.getAuthor(),
+                user,
+                "내 게시글에 새로운 댓글이 등록되었습니다.",
+                "/community_details.html?id=" + postId
+        );
         return CommentResponseDto.from(saved);
     }
 
@@ -46,19 +52,19 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new RuntimeException("댓글 없음"));
 
-            if (user.getRole() != Role.ADMIN &&
-                    !comment.getAuthor().getId().equals(user.getId())) {
-                throw new AccessDeniedException("삭제 권한 없음");
-            }
-
-            commentRepository.delete(comment);
+        if (user.getRole() != Role.ADMIN &&
+                !comment.getAuthor().getId().equals(user.getId())) {
+            throw new AccessDeniedException("삭제 권한 없음");
         }
 
-        // 관리자 삭제 메서드 추가
-        @Transactional
-        public void deleteAllByPostId(Long postId) {
-            commentRepository.deleteByPostId(postId);
-        }
+        commentRepository.delete(comment);
+    }
+
+    // 관리자 삭제 메서드 추가
+    @Transactional
+    public void deleteAllByPostId(Long postId) {
+        commentRepository.deleteByPostId(postId);
+    }
 
 
 }

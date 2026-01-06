@@ -1,9 +1,9 @@
-package java.org.work.backend.exception;
+package org.work.backend.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
-import response.ApiResponse;
+import org.work.backend.common.response.ApiResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

@@ -1,4 +1,4 @@
-package java.org.work.backend.config;
+package org.work.backend.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import jwt.JwtAuthenticationFilter;
-import jwt.JwtAuthenticationEntryPoint;
-import jwt.JwtProvider;
-import java.org.work.backend.domain.user.service.CustomUserDetailsService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.work.backend.common.jwt.JwtAuthenticationFilter;
+import org.work.backend.common.jwt.JwtAuthenticationEntryPoint;
+import org.work.backend.common.jwt.JwtProvider;
+import org.work.backend.domain.user.service.CustomUserDetailsService;
 
 @Configuration
 @RequiredArgsConstructor
@@ -48,9 +50,10 @@ public class SecurityConfig {
                         // API 권한
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/community/**", "/api/questions/**","/api/posts/**",
+                                "/api/qna/**",
                                 "/api/comments/post/**").permitAll()
                         // 마이페이지는 로그인 필수
-                        .requestMatchers("/api/mypage/**").authenticated()
+                        .requestMatchers("/api/mypage/**", "notifications/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex
@@ -63,8 +66,8 @@ public class SecurityConfig {
         return http.build();
     }
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 }

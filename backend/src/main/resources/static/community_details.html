@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="javascript/jquery-1.12.3.js"></script>
     <script src="javascript/common.js"></script>
+    <script src="javascript/notifications.js"></script>
 </head>
 <body>
 
@@ -16,6 +17,16 @@
             <ul class="navi">
                 <li><a href="community.html">게시판</a></li>
                 <li><a href="#" onclick="logout()">로그아웃</a></li>
+                <li class="notification-area">
+                    <button id="notificationBtn" class="notification-btn">🔔
+                        <span id="notificationBadge" class="notification-badge hidden">0</span>
+                    </button>
+                    <div id="notificationDropdown" class="notification-dropdown hidden">
+                        <div class="notification-header">알림</div>
+                        <ul id="notificationList"></ul>
+                        <div class="notification-empty hidden">알림이 없습니다.</div>
+                    </div>
+                </li>
             </ul>
         </nav>
     </div>
@@ -37,6 +48,6 @@
     <button onclick="writeComment()">댓글 작성</button>
 </div>
 
-<script src="javascript/community_details.js"></script>
+<script src="javascript/community_detail.js"></script>
 </body>
 </html>

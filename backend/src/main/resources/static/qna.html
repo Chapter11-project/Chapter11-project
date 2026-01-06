@@ -26,6 +26,16 @@
                 <li><a href="community.html">일반 게시판</a></li>
                 <li><a href="qna.html">Q&A 게시판</a></li>
                 <li><a href="#" onclick="logout()">로그아웃</a></li>
+                <li class="notification-area">
+                    <button id="notificationBtn" class="notification-btn">🔔
+                        <span id="notificationBadge" class="notification-badge hidden">0</span>
+                    </button>
+                    <div id="notificationDropdown" class="notification-dropdown hidden">
+                        <div class="notification-header">알림</div>
+                        <ul id="notificationList"></ul>
+                        <div class="notification-empty hidden">알림이 없습니다.</div>
+                    </div>
+                </li>
             </ul>
         </nav>
     </div>
@@ -37,21 +47,7 @@
 
         <h2>Q&A 게시판</h2>
 
-        <!-- Q&A 목록 -->
-        <table class="qna-table">
-            <thead>
-            <tr>
-                <th>No</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>상태</th>
-            </tr>
-            </thead>
-            <tbody id="qnaList">
-            <!-- JS로 동적 삽입 -->
-            </tbody>
-        </table>
+        <div id="qnaList" class="qna-list"></div>
 
         <!-- 질문 작성 -->
         <div class="qna-write">
@@ -65,6 +61,7 @@
 </div>
 
 <!-- 페이지 전용 JS -->
+<script src="javascript/notifications.js"></script>
 <script src="javascript/qna.js"></script>
 
 </body>

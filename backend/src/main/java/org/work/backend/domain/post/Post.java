@@ -1,6 +1,6 @@
-package java.org.work.backend.domain.post;
+package org.work.backend.domain.post;
 
-import java.org.work.backend.domain.user.User;
+import org.work.backend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
