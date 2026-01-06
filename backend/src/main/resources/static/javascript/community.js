@@ -1,88 +1,79 @@
-$(document).ready(function () {
+const COMMUNITY_BOARD = "GENERAL";
 
-    // ✅ 글쓰기 버튼
-    $("#writeBtn").on("click", function () {
-        const token = getToken();
+function formatDate(dateString) {
+    if (!dateString) return "-";
+    const d = new Date(dateString);
+    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+}
 
-        if (!token) {
-            alert("로그인이 필요합니다.");
-            location.href = "login.html";
-            return;
+
+        function boardLabel(type) {
+            if (type === "GENERAL") return "커뮤니티";
+            if (type === "QNA") return "Q&A";
+            return type || "-";
         }
 
-        location.href = "write.html";
-    });
+        function renderCommunity(list) {
+            const $tbody = $("#communityList");
+            const $empty = $("#communityEmpty");
+            $tbody.empty();
 
-    loadCurrentUser();
-    loadPosts("GENERAL");
-});
+            if (!list || list.length === 0) {
+                $empty.removeClass("hidden");
+                return;
+            }
+            $empty.addClass("hidden");
 
-/* ===============================
-   로그인 유저 정보
-================================ */
-let currentUser = null;
-
-async function loadCurrentUser() {
-    const token = getToken();
-    if (!token) return;
-
-    const res = await fetch("/api/users/me", {
-        headers: authHeader()
-    });
-
-    if (res.ok) {
-        currentUser = await res.json();
-    }
-}
-
-/* ===============================
-   게시글 목록
-================================ */
-async function loadPosts(boardType) {
-    const res = await fetch(`/api/posts?boardType=${boardType}`);
-    const posts = await res.json();
-    renderPosts(posts);
-}
-
-function renderPosts(posts) {
-    const list = $("#postList");
-    list.empty();
-
-    posts.forEach(post => {
-        const li = $("<li>");
-
-        li.append(`<h3>${post.title}</h3>`);
-        li.append(`<p>${post.content}</p>`);
-        li.append(`<small>작성자: ${post.authorUsername}</small><br>`);
-
-        if (canDelete(post)) {
-            const deleteBtn = $("<button>삭제</button>");
-            deleteBtn.on("click", () => deletePost(post.id));
-            li.append(deleteBtn);
+            list.forEach(post => {
+                const createdAt = formatDate(post.createdAt);
+                $tbody.append(`
+            <tr class="board-row community-row" data-id="${post.id}">
+                <td><span class="badge secondary">${boardLabel(post.boardType)}</span></td>
+                <td class="board-title">${post.title}</td>
+                <td>${post.authorUsername}</td>
+                <td>${createdAt}</td>
+            </tr>
+        `);
+            });
         }
 
-        list.append(li);
-    });
-}
+        function loadCommunity() {
+            $.get("/api/posts", {boardType: COMMUNITY_BOARD}, list => {
+                renderCommunity(list);
+            }).fail(xhr => alert(xhr.responseJSON?.message || "게시글을 불러오지 못했습니다."));
+        }
 
-function canDelete(post) {
-    if (!currentUser) return false;
-    if (currentUser.role === "ADMIN") return true;
-    return post.authorId === currentUser.id;
-}
+        function writePost() {
+            if (!isLogin()) {
+                alert("로그인이 필요합니다.");
+                return;
+            }
+            const title = $("#title").val();
+            const content = $("#content").val();
+            if (!title || !content) {
+                alert("제목과 내용을 입력하세요.");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/api/posts",
+                contentType: "application/json",
+                data: JSON.stringify({ title, content, boardType: COMMUNITY_BOARD }),
+                success: () => {
+                    $("#title").val("");
+                    $("#content").val("");
+                    loadCommunity();
+                },
+                error: (xhr) => alert(xhr.responseJSON?.message || "등록 실패")
+            });
+        }
 
-async function deletePost(postId) {
-    if (!confirm("정말 삭제하시겠습니까?")) return;
+        $(document).on("click", ".community-row", function () {
+            const id = $(this).data("id");
+            location.href = `community_details.html?id=${id}`;
+        });
 
-    const res = await fetch(`/api/posts/${postId}`, {
-        method: "DELETE",
-        headers: authHeader()
-    });
+        $("#writeBtn").click(writePost);
+        $("#refreshBtn").click(loadCommunity);
 
-    if (res.ok) {
-        alert("삭제 완료");
-        location.reload();
-    } else {
-        alert("삭제 권한 없음");
-    }
-}
+        $(document).ready(loadCommunity);

@@ -7,7 +7,7 @@ import org.work.backend.domain.user.dto.SignupRequest;
 import org.work.backend.domain.user.service.UserService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class SignupController {
 

@@ -2,24 +2,90 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Community</title>
+    <title>일반 게시판 | Coffee Community</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 
+    <!-- JS -->
     <script src="javascript/jquery-1.12.3.js"></script>
     <script src="javascript/common.js"></script>
-    <script src="javascript/community.js"></script>
+    <script src="javascript/notifications.js"></script>
 </head>
 <body>
 
+<!-- ===== Header ===== -->
 <header>
-    <!-- 공통 헤더 -->
+    <div class="top">
+        <div class="logo">
+            <img src="img/logo.png" alt="Coffee Community Logo">
+        </div>
+        <nav class="menu">
+            <ul class="navi">
+                <li><a href="home.html">홈</a></li>
+                <li><a href="mypage.html">마이페이지</a></li>
+                <li><a href="community.html">일반 게시판</a></li>
+                <li><a href="qna.html">Q&A 게시판</a></li>
+                <li><a href="#" onclick="logout()">로그아웃</a></li>
+                <li class="notification-area">
+                    <button id="notificationBtn" class="notification-btn">🔔
+                        <span id="notificationBadge" class="notification-badge hidden">0</span>
+                    </button>
+                    <div id="notificationDropdown" class="notification-dropdown hidden">
+                        <div class="notification-header">알림</div>
+                        <ul id="notificationList"></ul>
+                        <div class="notification-empty hidden">알림이 없습니다.</div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
+<!-- ===== Content ===== -->
 <div class="bodywrap">
-    <button id="writeBtn">글쓰기</button>
-    <ul id="postList"></ul>
-</div>
+    <div class="board-container">
+
+        <div class="board-header">
+            <div>
+                <p class="eyebrow">커피 한 잔처럼 가벼운 수다부터 깊은 이야기까지</p>
+                <h2>일반 게시판</h2>
+            </div>
+            <div class="board-actions">
+                <button id="refreshBtn" class="btn-outline">새로고침</button>
+            </div>
+        </div>
+
+        <table class="board-table">
+            <thead>
+            <tr>
+                <th>구분</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody id="communityList"></tbody>
+        </table>
+        <div id="communityEmpty" class="board-empty hidden">등록된 글이 없습니다.</div>
+
+        <!-- 글 작성 -->
+            <div class="board-write">
+                <div class="board-write__header">
+                    <h3>새 글 쓰기</h3>
+                    <span class="helper-text">로그인 후 작성할 수 있습니다.</span>
+                </div>
+                <input type="text" id="title" placeholder="제목을 입력하세요">
+                <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+                <div class="write-actions">
+                    <button id="writeBtn" class="btn-primary">등록</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="javascript/community.js"></script>
 
 </body>
 </html>

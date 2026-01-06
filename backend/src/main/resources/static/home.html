@@ -8,6 +8,7 @@
 
     <script src="javascript/jquery-1.12.3.js"></script>
     <script src="javascript/common.js"></script>
+    <script src="javascript/notifications.js"></script>
     <script src="javascript/home.js" defer></script>
 </head>
 <body>
@@ -18,17 +19,22 @@
         <div class="logo">
             <img src="img/logo.png" alt="logo">
         </div>
-
         <nav class="menu">
             <ul class="navi">
                 <li><a href="home.html">홈</a></li>
                 <li><a href="mypage.html">마이페이지</a></li>
                 <li><a href="community.html">일반 게시판</a></li>
                 <li><a href="qna.html">Q&A 게시판</a></li>
-
-                <!-- 로그아웃 (기본 숨김) -->
-                <li id="logoutLi" style="display:none;">
-                    <a href="#" onclick="logout()">로그아웃</a>
+                <li><a href="#" onclick="logout()">로그아웃</a></li>
+                <li class="notification-area">
+                    <button id="notificationBtn" class="notification-btn">🔔
+                        <span id="notificationBadge" class="notification-badge hidden">0</span>
+                    </button>
+                    <div id="notificationDropdown" class="notification-dropdown hidden">
+                        <div class="notification-header">알림</div>
+                        <ul id="notificationList"></ul>
+                        <div class="notification-empty hidden">알림이 없습니다.</div>
+                    </div>
                 </li>
             </ul>
         </nav>
@@ -48,21 +54,26 @@
         </ul>
     </div>
 
-    <!-- 메인 영역 -->
+    <!-- 본문 및 로그인 -->
     <div class="hero">
         <h1>당신의 커피 이야기를 나누세요</h1>
         <p>원두 · 추출 · 취향을 기록하고 공유하는 커피 커뮤니티</p>
 
         <div class="hero-buttons">
-            <button class="btn-login" id="loginBtn">로그인</button>
-            <button class="btn-signup" id="signupBtn"
-                    onclick="location.href='signup.html'">
+            <button class="btn-login" onclick="location.href='login.html'">
+                로그인
+            </button>
+            <button class="btn-signup" onclick="location.href='signup.html'">
                 회원가입
             </button>
         </div>
     </div>
-
 </div>
+
+<!-- ===== Footer ===== -->
+<footer>
+    <p>© Coffee Community. All rights reserved.</p>
+</footer>
 
 </body>
 </html>

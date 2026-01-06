@@ -1,12 +1,21 @@
 package org.work.backend.controller;
 
-import org.work.backend.domain.post.Post;
-import org.work.backend.domain.post.repository.PostRepository;
-import org.work.backend.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.work.backend.domain.post.dto.PostResponseDto;
+import org.work.backend.domain.post.service.PostService;
+import org.work.backend.domain.qna.dto.QuestionResponseDto;
+import org.work.backend.domain.qna.service.QnaService;
+import org.work.backend.domain.user.CustomUserDetails;
+import org.work.backend.domain.user.User;
+import org.work.backend.domain.user.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -14,10 +23,37 @@ import java.util.List;
 @RequestMapping("/api/mypage")
 public class MyPageController {
 
-    private final PostRepository postRepository;
+    private final PostService postService;
+    private final UserService userService;
+    private final QnaService qnaService;
 
+    //    내가 작성한 게시글 조회 - 페이징
     @GetMapping("/posts")
-    public List<Post> myPosts(@AuthenticationPrincipal User user) {
-        return postRepository.findByAuthor(user);
+    public Page<PostResponseDto> myPosts(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        return postService.myPosts(userDetails.getUser(), pageable);
+    }
+
+    //     내가 작성한 게시글 삭제
+    @DeleteMapping("/posts/{postId}")
+    public void deletePost(
+            @PathVariable Long postId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        postService.delete(postId, userDetails.getUser());
+    }
+
+    //    내가 작성한 게시글 조회 - 전체
+    @GetMapping("/posts/all")
+    public List<PostResponseDto> myPostsAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        return postService.myPosts(userDetails.getUser());
+    }
+
+    //    내가 작성한 Q&A 질문 조회
+    @GetMapping("/questions")
+    public List<QuestionResponseDto> myQuestions(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        return qnaService.findByAuthor(userDetails.getUser());
     }
 }

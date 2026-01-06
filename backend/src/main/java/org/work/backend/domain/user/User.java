@@ -28,7 +28,9 @@ public class User {
         this.role = role;
     }
 
-    /** 회원가입 전용 팩토리 메서드 */
+    /**
+     * 회원가입 전용 팩토리 메서드
+     */
     public static User signup(String username, String encodedPassword) {
         return new User(username, encodedPassword, Role.USER);
     }

@@ -6,13 +6,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.work.backend.common.jwt.JwtProvider;
+import org.work.backend.domain.user.CustomUserDetails;
 import org.work.backend.domain.user.dto.LoginRequestDto;
 import org.work.backend.domain.user.dto.LoginResponseDto;
-import org.work.backend.domain.user.dto.SignupRequest;
-import org.work.backend.domain.user.service.UserService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -29,7 +28,12 @@ public class AuthController {
                         )
                 );
 
-        String token = jwtProvider.generateToken(authentication.getName());
-        return new LoginResponseDto(token);
+
+        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+        String token = jwtProvider.generateToken(
+                principal.getUsername(),
+                principal.getUser().getRole()
+        );
+        return new LoginResponseDto(token, principal.getUser().getRole().name(), principal.getUsername());
     }
 }

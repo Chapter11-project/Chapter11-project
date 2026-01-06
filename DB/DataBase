@@ -1,68 +1,65 @@
 -- 데이터베이스 생성
 CREATE DATABASE IF NOT EXISTS dbdb
-CHARACTER SET utf8mb4
-COLLATE utf8mb4_unicode_ci;
-
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
 USE dbdb;
 
--- logs 테이블
-CREATE TABLE access_logs (
+-- users 테이블 (엔티티 필드: username/password/role)
+CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    ip VARCHAR(45) NOT NULL,
-    action VARCHAR(255) NOT NULL,
-    access_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_accesslog_user
-        FOREIGN KEY (user_id)
-        REFERENCES users (id)
-        ON DELETE CASCADE
+    created_at DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6),
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('ADMIN', 'USER') NOT NULL,
+    CONSTRAINT uk_users_username UNIQUE (username)
 );
 
--- posts 테이블
+-- posts 테이블 (boardType, author 매핑)
 CREATE TABLE posts (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
+    board_type ENUM('QNA', 'COMMUNITY') NOT NULL,
     author_id BIGINT NOT NULL,
-    type ENUM('QNA', 'COMMUNITY') NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
     CONSTRAINT fk_post_author
-        FOREIGN KEY (author_id)
-        REFERENCES users (id)
+        FOREIGN KEY (author_id) REFERENCES users (id)
         ON DELETE CASCADE
 );
 
--- user 테이블
-CREATE TABLE users (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    created_at DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6),
-    email VARCHAR(255) NOT NULL,
-    nickname VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role ENUM('ADMIN', 'USER') NOT NULL
-);
-
-CREATE UNIQUE INDEX UK_users_email ON users (email);
-CREATE UNIQUE INDEX UK_users_nickname ON users (nickname);
-
--- comments 테이블
+-- comments 테이블 (author, post 매핑)
 CREATE TABLE comments (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     content TEXT NOT NULL,
     post_id BIGINT NOT NULL,
     author_id BIGINT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-
     CONSTRAINT fk_comment_post
-        FOREIGN KEY (post_id)
-        REFERENCES posts (id)
+        FOREIGN KEY (post_id) REFERENCES posts (id)
         ON DELETE CASCADE,
-
     CONSTRAINT fk_comment_author
-        FOREIGN KEY (author_id)
-        REFERENCES users (id)
+        FOREIGN KEY (author_id) REFERENCES users (id)
         ON DELETE CASCADE
 );
+
+-- access_logs 테이블 (AccessLog 엔티티 필드 매핑)
+CREATE TABLE access_logs (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NULL,
+    username VARCHAR(255),
+    ip_address VARCHAR(45),
+    user_agent VARCHAR(255),
+    request_uri VARCHAR(255),
+    http_method VARCHAR(10),
+    accessed_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 초기 데이터 (username 기준)
+INSERT INTO users (username, password, role) VALUES
+    ('user@test.com', 'encodedPassword', 'USER'),
+    ('admin@test.com', 'encodedPassword', 'ADMIN');
+
+INSERT INTO posts (title, content, board_type, author_id) VALUES
+    ('첫 글', '내용1', 'COMMUNITY', 1),
+    ('두 번째 글', '내용2', 'COMMUNITY', 1),
+    ('관리자 글', '관리자 내용', 'COMMUNITY', 2);

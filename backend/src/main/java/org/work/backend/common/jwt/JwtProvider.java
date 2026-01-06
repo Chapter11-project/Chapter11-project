@@ -3,9 +3,11 @@ package org.work.backend.common.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
+import org.work.backend.domain.user.Role;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Map;
 
 @Component
 public class JwtProvider {
@@ -15,8 +17,10 @@ public class JwtProvider {
 
     private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1시간
 
-    /** JWT 생성 */
-    public String generateToken(String username) {
+    /**
+     * JWT 생성
+     */
+    public String generateToken(String username, Role role) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
@@ -25,7 +29,9 @@ public class JwtProvider {
                 .compact();
     }
 
-    /** JWT에서 username 추출 */
+    /**
+     * JWT에서 username 추출
+     */
     public String getUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -35,7 +41,18 @@ public class JwtProvider {
                 .getSubject();
     }
 
-    /** JWT 검증 */
+    public String getRole(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role", String.class);
+    }
+
+    /**
+     * JWT 검증
+     */
     public boolean validateToken(String token) {
         try {
             getUsername(token);
