@@ -1,0 +1,10 @@
+build
+.gradle
+src/test
+*.log
+*.tmp
+.DS_Store
+node_modules
+*.iml
+.idea
+HELP.md
