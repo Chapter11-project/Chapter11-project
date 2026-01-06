@@ -35,3 +35,41 @@ Web Server:
 기능 단위로 feature 브랜치를 생성하여 develop 브랜치로 Pull Request를 통해 병합합니다.
 main 브랜치는 최종 배포용으로만 사용합니다.
 
+## Docker & 배포 실행 방법
+
+### 1) Docker 이미지 빌드 및 컨테이너 실행
+루트 경로가 아닌 `backend` 디렉터리에서 아래 명령어를 실행합니다.
+
+```bash
+# 최초 혹은 변경 후 빌드
+docker compose build
+
+# 백엔드(Spring Boot) + MySQL 컨테이너 기동
+docker compose up -d
+```
+
+### 2) 서비스 구성
+- **MySQL**: 8.0 이미지, 초기 스키마/데이터는 `docker/mysql/init.sql` 자동 실행
+- **백엔드**: Java 21, Gradle로 빌드된 Spring Boot JAR 실행
+- 포트 매핑: 백엔드 `8080`, DB `3306`
+
+### 3) 환경 변수
+`compose.yaml`에서 기본값이 설정되어 있으며 필요 시 아래와 같이 덮어쓸 수 있습니다.
+
+```bash
+DB_HOST=db
+DB_PORT=3306
+DB_NAME=dbdb
+DB_USER=dbuser
+DB_PASSWORD=db1234!
+```
+
+### 4) 로컬 확인
+- API: `http://localhost:8080` 에서 백엔드 동작 확인
+- DB: MySQL 클라이언트로 `localhost:3306` 접속 (`dbuser` / `db1234!`)
+
+### 5) 컨테이너 종료
+```bash
+docker compose down
+```
+
