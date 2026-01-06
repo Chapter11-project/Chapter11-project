@@ -196,6 +196,114 @@ header{
     font-size: 16px;
 }
 
+/* ===== Community Board ===== */
+.community-container{
+    padding:40px;
+    background:#fdfdfd;
+}
+.community-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+.community-header .eyebrow{
+    color:#888;
+    font-size:13px;
+    margin:0 0 6px;
+}
+.community-actions{
+    display:flex;
+    gap:10px;
+}
+.community-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    gap:16px;
+    margin-bottom:32px;
+}
+.community-card{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:16px;
+    background:#fff;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+.community-card .meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:13px;
+    color:#666;
+    margin-bottom:8px;
+}
+.community-card h3{
+    margin:0 0 8px;
+    font-size:18px;
+}
+.community-card .excerpt{
+    color:#555;
+    line-height:1.5;
+    min-height:48px;
+}
+.community-card .card-actions{
+    margin-top:12px;
+    text-align:right;
+}
+.btn-link{
+    color:#7e5ef2;
+    text-decoration:none;
+    font-weight:600;
+}
+.community-write{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:20px;
+    background:#fff;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+.community-write input,
+.community-write textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    margin-bottom:10px;
+}
+.community-write textarea{
+    min-height:120px;
+    resize:vertical;
+}
+.btn-primary{
+    background:#7e5ef2;
+    border:none;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:6px;
+    cursor:pointer;
+}
+.btn-outline{
+    border:1px solid #7e5ef2;
+    color:#7e5ef2;
+    background:transparent;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+}
+.badge.secondary{
+    background:#f0f1ff;
+    color:#555;
+    padding:3px 8px;
+    border-radius:10px;
+    font-size:12px;
+}
+.helper-text{
+    color:#888;
+    margin-top:6px;
+    font-size:13px;
+}
+
+
 .qna-table th{
     background: #f5f5f5;
 }
