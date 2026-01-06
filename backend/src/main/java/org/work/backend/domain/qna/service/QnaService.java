@@ -48,6 +48,15 @@ public class QnaService {
         return QuestionResponseDto.from(question);
     }
 
+    @Transactional(readOnly = true)
+    public List<QuestionResponseDto> findByAuthor(User author) {
+        return questionRepository.findByAuthorOrderByCreatedAtDesc(author)
+                .stream()
+                .map(QuestionResponseDto::from)
+                .toList();
+    }
+
+
     @Transactional
     public AnswerResponseDto createAnswer(Long questionId, AnswerRequestDto request, User author) {
         Question question = questionRepository.findById(questionId)

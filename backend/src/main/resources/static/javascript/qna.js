@@ -36,26 +36,30 @@ function renderTable() {
         `);
     });
 }
-    function renderAnswers(qustion) {
-        const answers = [...(question.answers || [])].sort((a, b) => (b.accepted === true) - (a.accepted === true));
-        const $list = $("#answerList");
-        $list.empty();
+function renderAnswers(question) {
+    const answers = [...(question.answers || [])]
+        .sort((a, b) => (b.accepted === true) - (a.accepted === true));
+    const $list = $("#answerList");
+    $list.empty();
 
-        if (answers.length === 0) {
-            $list.append("<p class=\"board-empty\">아직 등록된 답변이 없습니다.</p>");
-            return;
-        }
+    if (answers.length === 0) {
+        $list.append("<p class=\"board-empty\">아직 등록된 답변이 없습니다.</p>");
+        return;
+    }
 
-        answers.forEach(a => {
-            const canAccept = question.status === "WAITING"
-                && currentUsername() === question.authorUsername
-                && !isAdmin()
-                && !a.accepted
+    answers.forEach(a => {
+        const canAccept = question.status === "WAITING"
+            && currentUsername() === question.authorUsername
+            && !isAdmin()
+            && !a.accepted
 
             && isLogin();
-        const acceptBtn = canAccept ? `<button class="btn-outline accept-btn" data-question="${question.id}" data-answer="${a.id}">채택하기</button>` : "";
+        const acceptBtn = canAccept
+            ? `<button class="btn-outline accept-btn" data-question="${question.id}" data-answer="${a.id}">채택하기</button>`
+            : "";
 
-            $list.append(`
+
+        $list.append(`
             <div class="answer ${a.accepted ? "accepted" : ""}">
                 <div class="answer-meta">
                     <span>${a.authorUsername}</span>

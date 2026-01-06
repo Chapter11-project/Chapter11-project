@@ -9,6 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.work.backend.domain.post.dto.PostResponseDto;
 import org.work.backend.domain.post.service.PostService;
+import org.work.backend.domain.qna.dto.QuestionResponseDto;
+import org.work.backend.domain.qna.service.QnaService;
 import org.work.backend.domain.user.CustomUserDetails;
 import org.work.backend.domain.user.User;
 import org.work.backend.domain.user.service.UserService;
@@ -23,6 +25,7 @@ public class MyPageController {
 
     private final PostService postService;
     private final UserService userService;
+    private final QnaService qnaService;
 
     //    내가 작성한 게시글 조회 - 페이징
     @GetMapping("/posts")
@@ -46,5 +49,11 @@ public class MyPageController {
     @GetMapping("/posts/all")
     public List<PostResponseDto> myPostsAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return postService.myPosts(userDetails.getUser());
+    }
+
+    //    내가 작성한 Q&A 질문 조회
+    @GetMapping("/questions")
+    public List<QuestionResponseDto> myQuestions(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        return qnaService.findByAuthor(userDetails.getUser());
     }
 }
