@@ -1,8 +1,11 @@
 package org.work.backend.domain.post;
 
-import org.work.backend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.work.backend.domain.user.User;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -23,6 +26,9 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User author;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     private Post(String title, String content, BoardType boardType, User author) {
         this.title = title;

@@ -6,8 +6,7 @@
     </content>
     <content url="file://$MODULE_DIR$/../../backend/src/main" dumb="true">
       <sourceFolder url="file://$MODULE_DIR$/../../backend/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../backend/src/main" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../backend/src/main/java/org/work/backend/common" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../backend/src/main/java" isTestSource="false" />
     </content>
   </component>
 </module>

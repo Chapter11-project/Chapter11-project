@@ -43,7 +43,7 @@ public class PostService {
      */
     @Transactional(readOnly = true)
     public List<PostResponseDto> findByBoardType(BoardType boardType) {
-        return postRepository.findByBoardType(boardType)
+        return postRepository.findByBoardTypeOrderByCreatedAtDesc(boardType)
                 .stream()
                 .map(PostResponseDto::from)
                 .toList();
