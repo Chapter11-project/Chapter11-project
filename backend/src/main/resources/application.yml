@@ -1,9 +1,10 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/dbdb?useSSL=false&serverTimezone=Asia/Seoul
-    username: dbuser
-    password: db1234!
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://3.34.47.124:3306/dbdb?useSSL=false&serverTimezone=Asia/Seoul
+    username: dbuser
+    password: Dbuser123!
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -12,7 +13,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
-#  docker compose 의존 false
+  # docker compose 의존 false
   docker:
     compose:
       enabled: false
